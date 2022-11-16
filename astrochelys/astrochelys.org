@@ -1,0 +1,1546 @@
+#+TITLE: The Astrochelys Theme 
+#+DATE: 2020-01-17
+#+CATEGORY: in-silico
+#+AUTHOR: Hex
+#+PROPERTY: LANGUAGE en
+#+PROPERTY: SUMMARY A not-your-everyday org-mode file that tangles out into a complete Pelican theme. Written by people with not a lot of CSS/HTML know-how.
+#+PROPERTY: SUBTITLE a Pelican theme from non-web developers
+#+PROPERTY: TAGS css, pelican, python, html, theme, astrochelys
+#+PROPERTY: TOC_HEADERS ^h[1-2]
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+
+So we decided that the blog could use an upgrade in terms of theming. The [[https://elegant.oncrashreboot.com/][pelican-elegant]] theme that we'd been using so far is nice and has plenty of features but it's not extremely memorable given that you could easily stumble across other blogs with the same theme. It's about time for something unique. Problem is, we're not really CSS/HTML people. If forced to make websites showing off tools for work, we usually default to using [[https://plot.ly/dash/][Dash]]. Even starting this, we spent a fruitless half hour looking for visual GUI kind of tools that you could drag and drop stuff into and spit out HTML and CSS@@html:<label for="sn-visual" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-visual" class="margin-toggle"/><span class="sidenote">@@It's still kind of crazy to us that there isn't a tool like this. I mean, Web Developer in Firefox already lets you click on parts of the page and change around properties, why can't you just use it to make something from a blank page? We're probably missing something here - there's no way people in such a visual field spend all their time typing out hex colors@@html: </span>@@. Anyway, buckled down and wrote some HTML/CSS. 
+
+Well I say wrote, but credit where credit's due - most of this is from all around the internet. We first found [[https://edwardtufte.github.io/tufte-css/][Tufte-CSS]] and really liked the margin notes idea, then came across [[http://cachestocaches.com/][Caches to Caches]] and rooted around Web Developer for some of its CSS, used [[https://codepen.io/cliftwalker/pen/XJaEXY][this codepen]] for some simple blockquotes, and [[https://purecss.io/][PureCSS]] to make dealing with different screen sizes easier. We even kept some of the HTML from [[https://github.com/Pelican-Elegant/elegant][pelican-elegant]].
+
+This post is going to be a bit ambitious in that it's a literate org-mode file which tangles out to the complete CSS and HTML template files of the actual theme, found at [[https://github.com/out-of-cheese-error/astrochelys][the Astrochelys repository]]. For readability, most of the code blocks are collapsed and can be expanded by clicking on the little black arrow, like the one below.
+#+BEGIN_EXPORT html
+<details>
+<summary>Click me!</summary>
+#+END_EXPORT
+#+BEGIN_SRC python
+  from pathlib import Path
+  static_dir = Path.cwd() / "static"
+  if not static_dir.exists():
+      static_dir.mkdir()
+  css_dir = static_dir / "css"
+  if not css_dir.exists():
+      css_dir.mkdir()
+  html_dir = Path.cwd() / "templates"
+  if not html_dir.exists():
+      html_dir.mkdir()
+  snippets_dir = html_dir / "snippets"
+  if not (snippets_dir).exists():
+      snippets_dir.mkdir()
+
+#+END_SRC 
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+The main CSS file is called astrochelys.css and we'll be making it in parts below. Since CSS functions/styles can be defined in pretty much any order, we group there here by functionality. @@html:<label for="mn-pygments" class="margin-toggle">&raquo;</label><input type="checkbox" id="mn-pygments" class="margin-toggle"/><span class="marginnote">@@The CSS file for code block syntax highlighting is called ~pygments.css~ and basically just has the [[https://github.com/mozmorris/tomorrow-pygments/blob/master/css/tomorrow.css][Tomorrow]] syntax highlighting theme so we don't show it in the post, it's in the git repository though.@@html: </span>@@
+#+BEGIN_SRC css :tangle "static/css/pygments.css" :exports none
+.highlight .hll { background-color: #d6d6d6 }
+.highlight  { background: #ffffff; color: #4d4d4c }
+.highlight .c { color: #8e908c } /* Comment */
+.highlight .err { color: #c82829 } /* Error */
+.highlight .k { color: #8959a8 } /* Keyword */
+.highlight .l { color: #f5871f } /* Literal */
+.highlight .n { color: #4d4d4c } /* Name */
+.highlight .o { color: #3e999f } /* Operator */
+.highlight .p { color: #4d4d4c } /* Punctuation */
+.highlight .cm { color: #8e908c } /* Comment.Multiline */
+.highlight .cp { color: #8e908c } /* Comment.Preproc */
+.highlight .c1 { color: #8e908c } /* Comment.Single */
+.highlight .cs { color: #8e908c } /* Comment.Special */
+.highlight .gd { color: #c82829 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { color: #4d4d4c; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #718c00 } /* Generic.Inserted */
+.highlight .gp { color: #8e908c; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #3e999f; font-weight: bold } /* Generic.Subheading */
+.highlight .kc { color: #8959a8 } /* Keyword.Constant */
+.highlight .kd { color: #8959a8 } /* Keyword.Declaration */
+.highlight .kn { color: #3e999f } /* Keyword.Namespace */
+.highlight .kp { color: #8959a8 } /* Keyword.Pseudo */
+.highlight .kr { color: #8959a8 } /* Keyword.Reserved */
+.highlight .kt { color: #eab700 } /* Keyword.Type */
+.highlight .ld { color: #718c00 } /* Literal.Date */
+.highlight .m { color: #f5871f } /* Literal.Number */
+.highlight .s { color: #718c00 } /* Literal.String */
+.highlight .na { color: #4271ae } /* Name.Attribute */
+.highlight .nb { color: #4d4d4c } /* Name.Builtin */
+.highlight .nc { color: #eab700 } /* Name.Class */
+.highlight .no { color: #c82829 } /* Name.Constant */
+.highlight .nd { color: #3e999f } /* Name.Decorator */
+.highlight .ni { color: #4d4d4c } /* Name.Entity */
+.highlight .ne { color: #c82829 } /* Name.Exception */
+.highlight .nf { color: #4271ae } /* Name.Function */
+.highlight .nl { color: #4d4d4c } /* Name.Label */
+.highlight .nn { color: #eab700 } /* Name.Namespace */
+.highlight .nx { color: #4271ae } /* Name.Other */
+.highlight .py { color: #4d4d4c } /* Name.Property */
+.highlight .nt { color: #3e999f } /* Name.Tag */
+.highlight .nv { color: #c82829 } /* Name.Variable */
+.highlight .ow { color: #3e999f } /* Operator.Word */
+.highlight .w { color: #4d4d4c } /* Text.Whitespace */
+.highlight .mf { color: #f5871f } /* Literal.Number.Float */
+.highlight .mh { color: #f5871f } /* Literal.Number.Hex */
+.highlight .mi { color: #f5871f } /* Literal.Number.Integer */
+.highlight .mo { color: #f5871f } /* Literal.Number.Oct */
+.highlight .sb { color: #718c00 } /* Literal.String.Backtick */
+.highlight .sc { color: #4d4d4c } /* Literal.String.Char */
+.highlight .sd { color: #8e908c } /* Literal.String.Doc */
+.highlight .s2 { color: #718c00 } /* Literal.String.Double */
+.highlight .se { color: #f5871f } /* Literal.String.Escape */
+.highlight .sh { color: #718c00 } /* Literal.String.Heredoc */
+.highlight .si { color: #f5871f } /* Literal.String.Interpol */
+.highlight .sx { color: #718c00 } /* Literal.String.Other */
+.highlight .sr { color: #718c00 } /* Literal.String.Regex */
+.highlight .s1 { color: #718c00 } /* Literal.String.Single */
+.highlight .ss { color: #718c00 } /* Literal.String.Symbol */
+.highlight .bp { color: #4d4d4c } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #c82829 } /* Name.Variable.Class */
+.highlight .vg { color: #c82829 } /* Name.Variable.Global */
+.highlight .vi { color: #c82829 } /* Name.Variable.Instance */
+.highlight .il { color: #f5871f } /* Literal.Number.Integer.Long */
+#+END_SRC
+
+* Edits
++ 27 December 2020
+  Simplified colors and switched to Tomorrow theme. Added sidebar color, link backgrounds, code block borders. Made margin notes smaller.
++ 23 August 2020 
+*Important!* The following lines are needed in ~pelicanconf.py~ to ensure that tags and categories are headings within the tags page and categories page instead of each tag/category having its own dedicated page.
+#+BEGIN_SRC python
+TAG_SAVE_AS = ''
+CATEGORY_SAVE_AS = ''
+#+END_SRC
++ 11 August 2020 - Added a search bar via [[https://github.com/tinysearch/tinysearch][tinysearch]]
++ 23 May 2020 - Embedded [[https://hypothes.is][Hypothesis]] for annotating / comments (removed Disqus)
++ 09 May 2020 - Show only 5 most recent posts on home page
++ 21 April 2020 - Added [[https://usefathom.com/][Fathom]] analytics option
+  
+* Colors
+Since we have code blocks in almost every post, we'd like the colors to match the syntax highlighting theme. We're using the [[https://github.com/mozmorris/tomorrow-pygments/blob/master/css/tomorrow.css][Tomorrow]] theme - the main color (for titles and such) will be a  common color from the syntax highlighting theme: the color set for keywords (~.k~). Then, we use the name color (~.n~) as the color for hover text, sidebar links etc. A lighter version of this color is used as the background for the sidebar, links, inline code, blockquotes etc. 
+#+BEGIN_EXPORT html
+  <details>
+  <summary>Defining colors</summary>
+  #+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+ :root {
+  /* the .k (keyword) color from the syntax highlighting theme. */ 
+  /* used for links, blockquote borders, sidenote numbers, margin note indicators (on phone) */
+  --main-color: #8959a8; 
+  /* overall background */
+  --bg-color-main: #fff; 
+  /* the .n (name) color from the syntax highlighting theme. */
+  /* used for sidebar links, link hover text and article information headlines. */
+  --secondary-color: #4d4d4c;
+  /* lighter version of secondary-color. */
+  /* used in code block borders and as a background for sidebar, links, inline code and blockquotes. */
+  --bg-color-secondary: #e8e8e8; 
+  /* nearly black */
+  --text-color: #111; 
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+  </details>
+#+END_EXPORT
+* Fonts
+We need one for code (fixed-font), one for long-form text (variable-font), and one for headings and things in capitals that needs to look good when they're big (condensed-font), and finally one for writing OutOfCheeseError. These were the ones we picked from [[https://fonts.google.com/][Google Fonts]].
+#+BEGIN_SRC css  :tangle "static/css/astrochelys.css"
+:root {
+  --fixed-font: "Fira Code Medium";
+  --variable-font: "Cantarell";
+  --condensed-font: "Fira Sans Condensed";
+  --sitename-font: "VT323";
+}
+#+END_SRC
+* Base CSS styles
+Before getting into writing actual HTML, we already know what kinds of HTML  elements a typical webpage has - text, links, headings, images, code blocks, and, occasionally, blockquotes. So we start out by styling these with CSS with the colors, fonts, and sizes we have in mind. 
+** Body
+Most of the page is going to be white with dark text and normal writing font. The size of the font is ~1em~ which means roughly 16px and gives us a good unit for measurement. The ~div~ part makes it so that every time you use a div in HTML, it's in its own newline-separated block. We also make some classes we can use for centering and capitalizing text.
+#+BEGIN_EXPORT html
+<details>
+<summary>Styling body text</summary>
+#+END_EXPORT  
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+body {
+ color:var(--text-color);
+ background-color:var(--bg-color-main);
+ font-family: var(--variable-font), serif;
+ font-size: 1em;
+ margin:0
+}
+div {
+ display:block
+}
+.center-text {
+ text-align:center
+}
+.uppercase {
+ text-transform: uppercase
+}
+.condensed-font {
+ font-family: var(--condensed-font), sans-serif;
+}
+.fixed-font {
+ font-family: var(--fixed-font), monospace;
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+** Links
+Hyperlinks are a nice place to add some pizzazz - a color for the text that changes and becomes underlined when you hover, and a light background to make them stand out.
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+a {
+ text-decoration:none;
+ color:var(--main-color);
+ font-weight: bold;
+ background-color:var(--bg-color-secondary);
+}
+a:hover {
+ color:var(--secondary-color);
+ border-bottom:1px solid var(--secondary-color)
+}
+#+END_SRC
+** Headings
+These are usually going to be big so we use our narrower font and make sure there's enough space in between lines. The first set of ~font-size~ lines define what the sizes will be on laptop and desktop screens while the second set is for smaller screens (<48em width). We also make sure that title links on the main page don't have the link background.
+#+BEGIN_EXPORT html
+<details>
+<summary>Styling headers</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+   font-family:var(--condensed-font), sans-serif;
+   line-height: 1em;
+  }
+  h1 {font-size:2.5em}
+  h2 {font-size:2em}
+  h3 {font-size:1.8em}
+  h4 {font-size:1.5em}
+  h5 {font-size:1.2em}
+  h6 {font-size:1em}
+  @media screen and (max-width:48em) {
+      h1 {font-size:2em}
+      h2 {font-size:1.8em}
+      h3 {font-size:1.5em}
+      h4 {font-size:1.2em}
+      h5 {font-size:1em}
+      h6 {font-size:1em}
+  }
+
+h2 a {
+  background-color: unset;
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Code blocks
+There's two kinds of code - ~inline code~ (which is just <code> in HTML) and code blocks like the one below (which are surrounded by <pre> tags). The former just has a different font and a light background color to distinguish it from text, while the latter has a full gamut of margins, borders, padding and so on.
+#+BEGIN_EXPORT html
+<details>
+<summary>Styling code</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+code {
+  background: var(--bg-color-secondary);
+  font-family: var(--fixed-font), monospace;
+}
+pre, pre code {
+  font-family: var(--fixed-font), monospace;
+  color: var(--secondary-color);
+  font-size:1em;
+  width: inherit;  
+  max-width: 100%; 
+  height: auto;   
+  padding:10px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  display: block;
+  overflow-x:auto;
+  border: 0.3em solid;
+  border-color: var(--bg-color-secondary);
+  -webkit-text-size-adjust:none
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Images
+Images need to stay in their lane, so they're resized to fit into whichever div they're defined in, with some padding.
+#+BEGIN_EXPORT html
+<details>
+<summary>Styling images</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+img {
+  width: inherit;  
+  max-width: 100%; 
+  height: auto;   
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Blockquotes
+We adapted this [[https://codepen.io/cliftwalker/pen/XJaEXY][codepen]] for a simple blockquote.
+#+BEGIN_EXPORT html
+<details>
+<summary>Styling blockquotes</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+blockquote{
+  font-size: 1em;
+  width: 95%;
+  margin: 1em auto;
+  font-family: inherit;
+  color: var(--text-color);
+  padding: 0.5em 0.5em 0.1em 2em;
+  border-left: 0.5em solid var(--main-color) ;
+  position: relative;
+  background:var(--bg-color-secondary);
+}  
+
+blockquote::before{
+  font-family:var(--condensed-font);
+  content: "\201C";
+  color:var(--main-color);
+  font-size:4em;
+  position: absolute;
+  left: 0.1em;
+  top:-0.1em;
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+Here's how that looks:
+#+BEGIN_QUOTE
+  Human beings, little bags of thinking water held up briefly by fragile accumulations of calcium
+
+  *Terry Pratchett (Pyramids)*
+#+END_QUOTE
+** Horizontal lines
+These are the thin purple lines under the title in the sidebar and, if you're on a bigger screen, surrounding the little margin note on top about this post.
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+hr {
+ border:0;
+ border-top:0.2em solid var(--main-color);
+ margin:0.4em 0
+}
+#+END_SRC
+
+** Footer
+This controls the CSS for the "Powered by Pelican and Astrochelys" text at the bottom of the sidebar.
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:30px;
+   font-size: 0.8em;
+   text-align: center;
+}
+#+END_SRC
+
+* HTML Templates
+[[https://blog.getpelican.com/][Pelican]] has some nice documentation on [[https://docs.getpelican.com/en/stable/themes.html][creating a theme]] which basically says that you need up to 11 HTML template files, and you can use [[https://palletsprojects.com/p/jinja/][Jinja]] in them@@html:<label for="sn-jinja" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-jinja" class="margin-toggle"/><span class="sidenote">@@Jinja is a templating system that lets you, among other things, use for loops and variables and extend other HTML files.@@html: </span>@@. But you can also get away with just writing a ~base.html~ file and letting it use the default simple theme for the rest. We compromised and have 6 templates all of which extend ~base.html~. This section has just the ~<head>~ elements of all the templates.
+*** Base.html 
+~base.html~ has the stuff that needs to be present on every page (like the sidebar, links to all the different pages, an area for the content etc.). Importantly, it loads the PureCSS Grid system, Google Fonts, and the CSS stylesheets we're making.
+@@html:<label for="mn-hypothesis" class="margin-toggle">&raquo;</label><input type="checkbox" id="mn-hypothesis" class="margin-toggle"/><span class="marginnote">@@EDIT March 3 2020: added [[https://web.hypothes.is//][Hypothesis]] support so anyone can annotate this blog (with the little buttons on the top right corner)@@html: </span>@@
+#+BEGIN_EXPORT html
+<details>
+<summary>base.html head</summary>
+#+END_EXPORT
+#+BEGIN_SRC html :tangle "templates/base.html"
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}{% endblock %}</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% if GOOGLE_SEARCH_CONSOLE %}
+      <meta name="google-site-verification" content="{{GOOGLE_SEARCH_CONSOLE}}"/>
+      {% endif %}
+      {% block meta %}{% endblock %}
+      {#PureCSS#}
+      <!--[if lte IE 8]>
+          <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+      <![endif]-->
+      <!--[if gt IE 8]><!-->
+           <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+      <!--<![endif]-->
+
+      {#Fonts#}
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@500|Fira+Sans+Condensed|Cantarell|VT323&display=swap" rel="stylesheet">
+
+      {#Stylesheets#}
+      {% assets filters="cssmin", output="style.min.css", "css/astrochelys.css", "css/pygments.css" %}
+          <link href="/{{ ASSET_URL }}" rel="stylesheet">
+      {% endassets %}
+
+      {#Icons#}
+      <link rel="shortcut icon" href="{{ SITEURL }}/images/favicon.ico"/>
+
+      {#Hypothesis#}
+      <script src="https://hypothes.is/embed.js" async></script>
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+#+BEGIN_EXPORT html
+<label for="sn-analytics" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-analytics" class="margin-toggle"/>
+<span class="sidenote">
+#+END_EXPORT
+At the end of base.html's <head> is also where you add in things like analytics. No idea what this code does +but hey, analytics is going away soon anyway.+ *[UPDATE - 21 April 2020]* - Got rid of Google Analytics for OutOfCheeseError and switched to the simpler and more privacy-focused [[https://github.com/usefathom/fathom][Fathom (Lite)]] instead! 
+#+CAPTION: Analytics in base.html
+#+BEGIN_EXPORT html
+<details>
+<summary>Analytics in base.html</summary>
+#+END_EXPORT
+#+BEGIN_SRC html :tangle templates/base.html
+      {% if GOOGLE_ANALYTICS %}
+          <!-- Google Analytics -->
+          <script>
+              (function (i, s, o, g, r, a, m) {
+                  i['GoogleAnalyticsObject'] = r;
+                  i[r] = i[r] || function () {
+                      (i[r].q = i[r].q || []).push(arguments)
+                  }, i[r].l = 1 * new Date();
+                  a = s.createElement(o),
+                      m = s.getElementsByTagName(o)[0];
+                  a.async = 1;
+                  a.src = g;
+                  m.parentNode.insertBefore(a, m)
+              })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+              ga('create', '{{ GOOGLE_ANALYTICS }}', '{{ DOMAIN }}');
+              ga('send', 'pageview');
+          </script>
+          {% endif %}
+
+      {% if FATHOM_ANALYTICS %}
+      <!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
+          <script>
+            (function(f, a, t, h, o, m){
+            a[h]=a[h]||function(){
+            (a[h].q=a[h].q||[]).push(arguments)
+            };
+            o=f.createElement('script'),
+            m=f.getElementsByTagName('script')[0];
+            o.async=1; o.src=t; o.id='fathom-script';
+            m.parentNode.insertBefore(o,m)
+            })(document, window, '//{{ FATHOM_ANALYTICS }}/tracker.js', 'fathom');
+            fathom('set', 'siteId', '{{ FATHOM_SITE_ID }}');
+            fathom('trackPageview');
+          </script>
+          <!-- / Fathom -->
+     {% endif %}
+      </head>
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+#+BEGIN_EXPORT html
+</span>
+#+END_EXPORT
+Since all the other templates extend this one, their <head>s are a bit boring, they just define the title.
+*** Index.html
+The home page
+#+BEGIN_SRC html :tangle "templates/index.html"
+{% extends "base.html" %}
+{% block title %}{{ SITENAME }}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+*** Article.html
+This is the template for a post, such as this one.
+#+BEGIN_SRC html :tangle "templates/article.html"
+{% extends "base.html" %}
+{% block title %}
+{{ article.title|striptags|e }} {%if article.subtitle %} - {{ article.subtitle|striptags|e }} {% endif %} · {{ super() }}
+{% endblock title %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+*** Page.html
+The template for our Dailies page.
+#+BEGIN_SRC html :tangle "templates/page.html"
+{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+*** Categories.html 
+This page lists posts grouped by category
+#+BEGIN_SRC html :tangle "templates/categories.html"
+{% extends "base.html" %}
+{% block title %}Categories{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+*** Tags.html
+This page lists posts grouped by tag
+#+BEGIN_SRC html :tangle "templates/tags.html"
+{% extends "base.html" %}
+{% block title %}Tags{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+*** Archives.html
+This page lists posts grouped by year
+#+BEGIN_SRC html :tangle "templates/archives.html"
+{% extends "base.html" %}
+{% block title %}Archives{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+#+END_SRC
+
+* Layout
+The layout is something all pages will have in common so we set it up in base.html with PureCSS.
+#+BEGIN_SRC html :tangle templates/base.html
+    <body>
+    <div id="layout" class="pure-g">
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<details>
+<summary>And, in astrochelys.css, some things we don't really understand.</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+ * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#layout {
+    padding: 0;
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+
+** Header
+This is just an HTML snippet with the site name, description, navigation links, We'll use this below in the sidebar for desktops, and in the phone header for smaller screens. We're storing this in ~templates/snippets/header.html~.
+#+BEGIN_SRC html :tangle "templates/snippets/header.html"
+  <div class="sitename"><a href="/">{{ SITENAME }}</a></div>
+  <div><small>{{ BIO_TEXT }}</small></div>
+  <div>
+    <small>
+      <a href="/">Posts</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/pages/dailies">Dailies</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/feeds/all.rss.xml">RSS</a>
+      <br>
+      <a href="/categories">Categories</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/tags">Tags</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="/archives">Archives</a>
+    </small>
+  </div>
+  <br>
+  #+END_SRC
+
+** Sidebar
+We'll define the sidebar in ~base.html~ to have the header, an [[Search][optional search box]] and a section for the table of contents (TOC). This is a jinja block that we can fill in later in the other templates.
+#+BEGIN_SRC html :tangle "templates/base.html"
+  {#This means the sidebar is full-width on mobile (u) and a bit less than 1/4 on larger screens (md)#}
+  <div class="sidebar pure-u-1 pure-u-md-5-24">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          {% include "snippets/header.html" %}
+          {% if ADD_SEARCH_BOX %}
+              {% include "snippets/search.html" %}
+          {% endif %}
+        </div>
+        <div class="sidebar-content">
+          <div class="toc">{% block toc %}{% endblock %}</div>
+        </div>
+        <div id="footer"><small>Powered by <a href="http://getpelican.com/">Pelican</a> and <a href="https://github.com/out-of-cheese-error/astrochelys">Astrochelys</a></small></div>
+      </nav>
+  </div>
+#+END_SRC
+
+The associated CSS makes the sidebar use the condensed font so that longer titles still look okay. Since almost everything in the sidebar is a link, we style them different from links in the text, and make them right-justified so it sits flush against the post text. By setting the font-size to a relative percentage like 90% for lists, you get this nice gradation in sizes for h1, h2, and h3 headings. For laptop / computer screens the sidebar position is fixed, meaning it doesn't move when you scroll through the page.  
+#+BEGIN_EXPORT html
+<details>
+<summary>Sidebar CSS</summary>
+#+END_EXPORT
+#+CAPTION: Sidebar CSS
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  .sidebar {
+      background: var(--bg-color-secondary);
+      color: var(--secondary-color);
+      font-family: var(--condensed-font), sans-serif;
+  }
+  .sitename {
+      font-family: var(--sitename-font), monospace;
+      font-size: 1.3em;
+  }
+  .sidebar a {
+      font-weight: normal;
+      border: 2em;
+      background-color: unset;
+  }
+  .sidebar li a:hover, .sidebar .toc a:hover {
+      color: var(--main-color);
+  }
+  .sidebar li a, .sidebar .toc a {
+      color: var(--secondary-color);
+  }
+  .sidebar li {
+      line-height: 1.5em;
+      margin: 0 0 0.1em 0;
+  }
+  .sidebar-content {
+      margin: 10%;
+      width: 90%;
+      padding-right: 1.5em;
+      text-align: right;
+      font-size: 1em;
+      height: 70vh;
+      overflow-y: auto;
+  }
+  .sidebar-header {
+      margin: 5%;
+      width: 90%;
+      padding: 0.5em;
+      text-align: center;
+      font-size: 1.1em;
+  }
+  .sidebar ul {
+      list-style-type:none;
+      margin:0;
+      padding:0;
+      font-size: 90%;
+  }
+  @media (min-width: 48em) {
+      .sidebar {
+             position: fixed;
+             top: 0;
+             bottom: 0;
+         }
+  }
+  @media print {
+      .sidebar {
+             display: none;
+         }
+  }
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Phone Header
+Phone screens won't have a sidebar but will have a header at the top that links to the other pages. This stays the same for all pages, so we only have to talk about it in the base.
+#+BEGIN_SRC html :tangle templates/base.html
+  <nav class="phone-header">
+    {% include "snippets/header.html" %}
+  </nav>
+#+END_SRC
+
+The CSS turns off the phone header for larger screens, turns off the sidebar for phones, and styles the header pretty similar to the sidebar.
+#+BEGIN_EXPORT html
+<details>
+<summary>Phone header CSS</summary>
+#+END_EXPORT
+#+CAPTION: Phone header CSS
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  @media (min-width: 48em) {
+      .phone-header {
+          display: none;
+      }
+  }
+  @media screen and (max-width:48em) {
+      .sidebar {
+          display:none
+      }
+      .phone-header {
+          display: block;
+          text-align: center;
+          background: var(--bg-color-secondary);
+          color: var(--secondary-color);
+          min-height: 3.5em;
+          position: relative;
+          padding: 1em;
+          font-size: 1.1em;
+          font-family: var(--condensed-font), sans-serif;
+      }
+      .phone-header a {
+          font-weight: normal;
+          border: 0;
+      }
+  }
+  
+  @media print {
+      .phone-header {
+          display: none;
+      }
+  }
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Content
+The page content (i.e. what you're reading now) changes per page of course, but in the base we can already define how much space it takes - 3/4th of the page for both the text and the margin in the case of larger screens, and the full screen for phones. 
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in base.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in base.html
+#+BEGIN_SRC html :tangle templates/base.html
+        {#The main text (+margin) is full width on mobile and 4/5th on computer screens#}
+        <div class="content pure-u-1 pure-u-md-4-5">
+            <article>
+                {% block content %}{% endblock %}
+                <hr>
+            </article>
+        </div>
+    </div> {#Closes the layout div#}
+  </body>
+ </html>
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+Content looks different on screens and phones though - on a computer screen it should take up the center half of the page (~width: 50%~), leaving a fifth on the left for the sidebar (~margin-left: 20%~) - this goes into the CSS. To have some breathing room next to the sidebar and the margin, there's 3.5em of padding on each side. Phone screens don't have the sidebar or the margin so there's just a bit of padding and none of the other things. Finally, normal text and paragraphs need to be justified. 
+#+BEGIN_EXPORT html
+<details>
+<summary>Content CSS</summary>
+#+END_EXPORT
+#+CAPTION: Content CSS
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  @media (min-width: 48em) {
+      .content {
+          padding: 1em 3.5em 0 3.5em;
+          margin-left: 20%;
+          width: 50%;
+      }
+  }
+  @media screen and (max-width:48em) {
+      .content {
+          padding: 1em 2em 0 2em;
+      }
+  }
+  .content p {
+      text-align: justify;
+  }
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+* Text
+** Table of Contents
+The table of contents (~block toc~) in the sidebar changes per page, so you define it differently in each HTML template. The one in index.html just lists the titles of the five most recent posts. The one in article.html and page.html use a Pelican plugin called [[https://github.com/ingwinlu/pelican-toc][pelican-toc]] which auto-generates a table of contents for a page based on it's h1, h2, h3 etc. tags and stores it in ~article.toc~. @@html:<label for="sn-toc" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-toc" class="margin-toggle"/><span class="sidenote">@@You can control what depth of headers to consider in your ~pelicanconf.py~ - we have it set to h1, h2, and h3@@html: </span>@@
+#+BEGIN_EXPORT html
+<details>
+<summary>Table of Contents (TOC) in index.html</summary>
+#+END_EXPORT
+#+CAPTION: Table of Contents for index.html
+#+BEGIN_SRC html :tangle templates/index.html
+  {% block toc %}
+  <div class="uppercase">Recent Posts</div>
+  <br>
+  <div>
+    <ul>
+      {% for article in articles_page.object_list %}
+      {% if loop.index <= 5 %}
+        <li>
+          <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+        </li>
+      {% endif %}
+      {% endfor %}
+  </ul>
+  </div>
+  {% endblock toc %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<details>
+<summary>TOC in article.html</summary>
+#+END_EXPORT
+#+CAPTION: Table of Contents for article.html
+#+BEGIN_SRC html :tangle templates/article.html
+{% block toc %}
+{% if article.toc %}
+<div class="uppercase">{{article.title}}</div>
+<br>
+<div class="col-lg-3 hidden-xs hidden-sm">
+    {{article.toc}}
+</div>
+{% endif %}
+{% endblock %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<details>
+<summary>TOC in page.html</summary>
+#+END_EXPORT
+#+CAPTION: Table of Contents for page.html
+#+BEGIN_SRC html :tangle templates/page.html
+{% block toc %}
+{% if page.toc %}
+<div class="uppercase">{{page.title}}</div>
+<br>
+<div class="col-lg-3 hidden-xs hidden-sm">
+    {{page.toc}}
+</div>
+{% endif %}
+{% endblock %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+For the Tags page we list all tags (in alphabetical order) separated by a "." (since we're rather tag-happy and putting them in different lines means the sidebar would run out of space pretty quickly). Clicking on one should jump to the part of the page for that tag, so we use a relative link here with ~#~ that we'll re-use in the content section. The Categories page sidebar is similar. By default Pelican makes a different page for each tag and each category - to turn off this behavior and have a single page for tags and one for categories you'll need to add the following in your ~pelicanconf.py~
+
+#+BEGIN_SRC python
+TAG_SAVE_AS = ''
+CATEGORY_SAVE_AS = ''
+#+END_SRC
+
+
+#+BEGIN_EXPORT html
+<details>
+<summary>TOC in tags.html</summary>
+#+END_EXPORT
+#+CAPTION: Table of Contents for tags.html
+#+BEGIN_SRC html :tangle templates/tags.html
+{% block toc %}
+<div class="uppercase">Tags</div>
+<br>
+<div>
+    {% for tag, articles in tags|sort %}
+    <a href="#{{ tag.slug }}-ref">{{ tag }}</a>&nbsp;.&nbsp;
+    {% endfor %}
+</div>
+{% endblock toc %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<details>
+<summary>TOC in categories.html</summary>
+#+END_EXPORT
+#+CAPTION: Table of Contents for categories.html
+#+BEGIN_SRC html :tangle templates/categories.html
+{% block toc %}
+<div class="uppercase">Categories</div>
+<br>
+<div>
+{% for category, articles in categories %}
+<a href="{{ SITEURL }}/{{ CATEGORIES_URL|default('categories') }}#{{ category }}-ref">{{ category }}</a><br>
+{% endfor %}
+</div>
+{% endblock toc %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+And we don't yet have a sidebar for the Archives since I wasn't entirely sure how to code it in - maybe later.
+** Content
+The Index page gives the titles, subtitles, and summaries of all our posts. We put each article's published date in a margin note to use up more of the page.
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in index.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in index.html
+#+BEGIN_SRC html :tangle templates/index.html
+  {% block content %}
+  <section id="content">
+    {% for article in articles_page.object_list %}
+    <article class="hentry">
+      <div class="marginnote">
+        <div class="fixed-font">
+          <time class="published" datetime="{{ article.date.isoformat() }}">
+            {{ article.locale_date }}
+          </time>
+        </div>
+      </div>
+      <div class="article-title">
+        <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
+      </div>
+      <div class="article-content"> {{ article.summary }} </div>
+    </article>
+    {% endfor %}
+    {% if articles_page.has_other_pages() %}
+    {% include 'pagination.html' %}
+    {% endif %}
+  </section>
+  {% endblock content %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+Sometimes post titles get messed up on smaller screens so this CSS just let's it wrap words in any way possible to make it fit on the screen.
+#+CAPTION: article-title CSS
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  @media screen and (max-width:48em) {
+        .article-title {
+            word-wrap: break-word;
+            font-family: var(--condensed-font), sans-serif;
+        }
+    }
+#+END_SRC
+Before starting an article, we'd like some information about it - when it was published 
+@@html:<label for="sn-date" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-date" class="margin-toggle"/><span class="sidenote">@@You can change how the date is displayed using the ~DEFAULT_DATE_FORMAT~ variable in ~pelicanconf.py~.@@html: </span>@@, what tags are associated with it, which category it belongs to etc. This is the article information - it's stored in a margin note and it's not visible on phones (where it made more sense to concentrate on the content). Then you have the title (and subtitle), followed by the actual content.
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in article.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in article.html
+#+BEGIN_SRC html :tangle templates/article.html
+    {% block content %}
+    <section id="content" class="body">
+        <div class="marginnote">
+          <hr>
+          <div class="article-information">
+            <div class="article-information-heading uppercase">Published</div>
+            <time class="published" datetime="{{ article.date.isoformat() }}">
+              {{ article.locale_date }}
+            </time>
+            {% if article.modified %}
+            <div class="article-information-heading uppercase">Modified</div>
+            <time class="modified" datetime="{{ article.modified.isoformat() }}">
+              {{ article.locale_modified }}
+            </time>
+            {% endif %}
+            {% if article.category %}
+            <div class="article-information-heading uppercase">Category</div>
+            <div>
+              <a href="{{ SITEURL }}/categories#{{ article.category}}-ref">{{ article.category }}</a>
+            </div>
+            {% endif %}
+            {% if article.tags %}
+            <div class="article-information-heading uppercase">Tags</div>
+            <div>
+              {% for tag in article.tags %}
+              <a href="{{ SITEURL }}/tags#{{ tag }}-ref">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+            </div>
+          <hr>
+        </div>
+        <header><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">
+          <h1 class="article-title">
+            {{ article.title }}
+          </h1>
+          <h3>
+            {% if article.subtitle %}
+            {{ article.subtitle }}
+            {% endif %}
+          </h3>
+        </a></header>
+        <div class="article-content">
+          {{ article.content }}
+        </div>
+        <hr>
+        <div class="condensed-font">
+        <br>
+        For comments, click the arrow at the top right corner.
+        <br><br>
+        </div>
+    </section>
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<label for="mn-comments" class="margin-toggle">&raquo;</label><input type="checkbox" id="mn-comments" class="margin-toggle"/>
+<span class="marginnote">
+#+END_EXPORT
+We +use+ used to use [[https://disqus.com/][Disqus]] to add a way for people to comment / vote on articles. UPDATE: We've switched entirely to using [[https://hypothes.is/][Hypothesis]] for comments, it's also nicer because you can attach a comment to a certain line / paragraph instead of having it all the way at the bottom of the page. We used [[https://github.com/jcouyang/disqus-to-hypothesis][this neat utility]] to migrate from Disqus to Hypothesis. The migration is not perfect but we didn't have a lot of comments anyway. Leaving the Disqus code in here in case others want to use it though. 
+#+BEGIN_EXPORT html
+<details>
+<summary>Disqus support in article.html</summary>
+#+END_EXPORT
+#+CAPTION: Disqus support in article.html
+#+BEGIN_SRC html :tangle "templates/article.html"
+{% if DISQUS_SITENAME and article.status != "draft" %}
+	<hr>
+	<!-- Disqus -->
+	<div id="disqus_thread"></div>
+	<script>
+	var disqus_config = function() {
+		this.page.url = '{{ SITEURL }}/{{ article.url }}';
+		this.page.identifier = '{{ article.url }}';
+	};
+	(function() {
+		var d = document, s = d.createElement('script');
+		s.src = '//{{ DISQUS_SITENAME }}.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+	</script>
+	{% endif %}
+{% endblock %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+#+BEGIN_EXPORT html
+</span>
+#+END_EXPORT
+
+Some minor styling:
+#+CAPTION: Article CSS 
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  .article-information {
+      font-family: var(--condensed-font), sans-serif;
+  }
+  .article-information-heading {
+      color: var(--secondary-color);
+  }
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<details>
+<summary>Page.html has pretty straightforward content</summary>
+#+END_EXPORT
+#+CAPTION: Content in page.html
+#+BEGIN_SRC html :tangle templates/page.html
+  {% block content %}
+  <section id="content" class="body">
+    <header><h1>{{ page.title }}</h1></header>
+    {{ page.content }}
+    {% if page.modified %}
+    <p>Last updated: {{ page.locale_modified }}</p>
+    {% endif %}
+  </section>
+  {% endblock %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+We really liked the Tags page from pelican-elegant, which starts off with a sort of cloud of all tags. Turns out it's just a list but then you style it with CSS. After that there's a section for each tag listing the articles associated with it. 
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in tags.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in tags.html
+#+BEGIN_SRC html :tangle templates/tags.html
+    {% block content %}
+    <header>
+        <h2><a href="{{ SITEURL }}/{{ TAGS_URL|default('tags') }}">All Tags</a></h2>
+    </header>
+    <ul class="list-of-tags">
+        {% for tag, articles in tags|sort %}
+        <li>
+            {% set num = articles|count %}
+            <a href="#{{ tag.slug }}-ref">{{ tag }}<span>{{ num }}</span></a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% for tag, articles in tags|sort %}
+    <div>
+      <h3 id="{{ tag.slug }}-ref" class="tag-title">{{ tag }}</h3>
+        {% for article in articles|sort(reverse = true, attribute = 'date') %}
+        <div class="marginnote">
+          <div class="fixed-font">
+            <time class="published" datetime="{{ article.date.isoformat() }}">
+              {{ article.locale_date }}
+            </time>
+          </div>
+        </div>
+        <div class="article-title">
+          <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}<br></a>
+          {%if article.subtitle %}
+          {{ article.subtitle }}
+          {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% endblock content %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<details>
+<summary>Tags list CSS</summary>
+#+END_EXPORT
+#+CAPTION: Tags list CSS
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+.list-of-tags {
+    font-family: var(--condensed-font), sans-serif;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+}
+.list-of-tags li {
+    float: left;
+    line-height: 1.5em;
+    margin: 0;
+}
+.list-of-tags a {
+    background: var(--bg-color-secondary);
+    border-radius: 3px;
+    color: var(--text-color);
+    margin: 2px;
+    padding: 0.1em 0.4em;
+    text-decoration: none;
+}
+.list-of-tags a span {
+    font-size: 0.8em;
+    vertical-align: super;
+}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+The Categories and Archives pages are pretty much the same as the tags page except without the cloud. We lifted archives.html mostly from pelican-elegant, though there they also make it so that you can expand each year separately - seemed overkill so this just lists by year.
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in categories.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in categories.html
+#+BEGIN_SRC html :tangle templates/categories.html
+  {% block content %}
+  <header>
+      <h2><a href="{{ SITEURL }}/{{ CATEGORIES_URL|default('categories') }}">Categories</a></h2>
+  </header>
+  {% for category, articles in categories %}
+  <div>
+    <h3>
+      {% set num = articles|count %}
+      {{ category }} ({{ num }})
+    </h3>
+    <div id="{{ category.slug }}-ref">
+      {% for article in articles %}
+      <div class="marginnote">
+      <div class="fixed-font">
+        <time class="published" datetime="{{ article.date.isoformat() }}">
+          {{ article.locale_date }}
+        </time>
+      </div>
+      </div>
+      <div class="article-title">
+        <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}<br></a>
+        {%if article.subtitle %}
+        {{ article.subtitle }}
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  {% endblock content %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<details>
+<summary>Content in archives.html</summary>
+#+END_EXPORT
+#+CAPTION: Content in archives.html
+#+BEGIN_SRC html :tangle templates/archives.html
+  {% block content %}
+  <h1>Archives</h1>
+  {% for article in dates %}
+  {% set year = article.date.strftime('%Y') %}
+  {% if loop.first %}
+  <h2 id="{{year }}"><a href="#{{year}}">{{ year }}</a></h2>
+  {% else %}
+  {% set prevyear = loop.previtem.date.strftime('%Y') %}
+  {% if prevyear != year %}
+  <h2 id="{{year }}"><a href="#{{year}}">{{ year }}</a></h2>
+  {% endif %}
+  {% endif %}
+  <article itemscope>
+    {% set month = article.date.strftime('%m') %}
+    {% set day = article.date.strftime('%d') %}
+    <div class="marginnote">
+    <div class="fixed-font">
+      <time class="published" datetime="{{ article.date.isoformat() }}">
+        {{ article.locale_date }}
+      </time>
+    </div>
+    </div>
+    <div class="article-title">
+      <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}<br></a>
+      {%if article.subtitle %}
+      {{ article.subtitle }}
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+  {% endblock content %}
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+** Margin notes
+Well, we have space free on the right; let's make some notes in the margin. This code is from [[https://edwardtufte.github.io/tufte-css/][tufte-css]] with minor modifications, sidenotes have a number attached and margin notes don't. On phones, margin notes also have a small arrow symbol - you can click on the number / arrow and the note pops up. 
+
+#+BEGIN_EXPORT html
+<details>
+<summary>Margin CSS</summary>
+#+END_EXPORT
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+  .body {
+      counter-reset: sidenote-counter;
+  }
+  .sidenote,
+  .marginnote {
+      float: right;
+      clear: right;
+      margin-right: -65%;
+      width: 55%;
+      font-size: 80%;
+      font-family: var(--variable-font), sans-serif;
+      vertical-align: baseline;
+      position: relative; 
+  }
+  .sidenote-number {
+      counter-increment: sidenote-counter; 
+  }
+  .sidenote-number:after,
+  .sidenote:before {
+      font-family: var(--fixed-font), monospace;
+      position: relative;
+      vertical-align: baseline; 
+      color: var(--main-color);
+  }
+  .sidenote-number:after {
+      content: counter(sidenote-counter);
+      font-size: 80%;
+      top: -0.5em;
+  }
+  .sidenote:before {
+      content: counter(sidenote-counter);
+      top: -0.5em; 
+  }
+  blockquote .sidenote,
+  blockquote .marginnote {
+      margin-right: -82%;
+      min-width: 59%;
+      text-align: left; 
+  }
+  .marginnote hr {
+    color: var(--main-color);
+  }
+  label.sidenote-number {
+      display: inline; 
+  }
+  label.margin-toggle:not(.sidenote-number) {
+      display: none; 
+  }
+  input.margin-toggle {
+      display: none; 
+  }
+  label.sidenote-number {
+      display: inline; 
+  }
+  @media screen and (max-width:48em) {
+      label.margin-toggle:not(.sidenote-number) {
+          display: inline; 
+          color: var(--main-color);
+      }
+      .sidenote,
+      .marginnote {
+          display: none; 
+      }
+      .margin-toggle:checked + .sidenote,
+      .margin-toggle:checked + .marginnote {
+          display: block;
+          float: left;
+          left: 1em;
+          clear: both;
+          width: 95%;
+          margin: 1em 2.5%;
+          vertical-align: baseline;
+          position: relative; 
+      }
+      label {
+          cursor: pointer; 
+      }
+  }
+#+END_SRC
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+To actually make a note in your article you need some raw HTML, easy enough to add into markdown, jupyter, and org@@html:<label for="sn-org" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-org" class="margin-toggle"/><span class="sidenote">@@I made some org-capture templates for adding these notes (over at [[https://out-of-cheese-error.netlify.com/spacemacs-config][this post with my .spacemacs]]) so it's as easy as writing normal content@@html: </span>@@ files:
+#+BEGIN_SRC html
+{#Margin Note#}
+<label for="mn-note" class="margin-toggle">&bull;</label>
+<input type="checkbox" id="mn-note" class="margin-toggle"/>
+<span class="marginnote">
+your note here
+</span>
+
+{#Side Note#}
+<label for="sn-note" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-note" class="margin-toggle"/>
+<span class="sidenote">
+your note here
+</span>
+#+END_SRC
+
+
+* Search 
+We decided to use [[https://github.com/tinysearch/tinysearch][tinysearch]] to add a tiny search box with full-text search. It's a bit on the simple side since there's no fuzzy search or keyword highlighting, but it's snappy and doesn't take up a lot of space which is all we can ask for. To add this to a website you first need to generate a list of JSON objects that hold the title, url and content of each post. This is pretty easy to do with a pelican template, which we save in ~templates/json.html~:
+#+BEGIN_SRC html :tangle "templates/json.html"
+[
+{%- for article in articles -%}
+{% if article.status != "draft" %}
+{
+"title": {{ article.title | striptags | tojson | safe }},
+"url": {{ article.url | tojson | safe }},
+"body": {{ article.content | striptags | tojson | safe }}
+}{% if not loop.last %},{% endif %}
+{% endif %}
+{%- endfor -%}
+]
+#+END_SRC
+
+To make sure pelican makes this index on every build, add a ~json.md~ file to the ~content/pages~ folder with
+#+BEGIN_SRC md
+Title: JSON
+Template: json
+Slug: json
+#+END_SRC
+This makes an ~output/pages/json.html~ file on running ~pelican content~ that uses the template we made above to make a list of JSON objects, one for each article.
+
+We'll use ~tinysearch~ (after following their installation instructions) to index this JSON file, followed by ~terser~ to minify the resulting JS. To make this whole pipeline single click, we added the commands to the end of pelican's Makefile:
+
+#+BEGIN_SRC makefile
+.PHONY: index
+index: content ## Build the search index with tinysearch
+	tinysearch --optimize --path $(OUTPUTDIR) $(OUTPUTDIR)/pages/json.html
+.PHONY: minify
+minify: ## Compress JavaScript assets
+	terser --compress --mangle --output $(OUTPUTDIR)/search_min.js -- $(OUTPUTDIR)/tinysearch_engine.js
+
+.PHONY: build 
+build: html index minify ## Build static site and search index, minify JS
+#+END_SRC
+
+Meaning we can just call ~make build~ after adding a new post (instead of ~pelican content~).
+
+Alright so that indexes our articles and makes the required tinysearch files; now let's add the search box! We've encapsulated this into another template file so that it's plug-and-play. This is copied as-is from tinysearch's creator [[https://github.com/mre/mre.github.io][Matthias Endler's blog source]].
+#+BEGIN_EXPORT html
+  <details>
+  <summary>templates/snippets/search.html</summary>
+  #+END_EXPORT
+#+BEGIN_SRC html :tangle "templates/snippets/search.html"
+<script type="module"> 
+import { search, default as init } from './search_min.js';
+    window.search = search;
+
+async function lazyLoad() {
+    await init('./tinysearch_engine_bg.wasm');
+}
+
+var loaded = false;
+
+function autocomplete(inp) {
+    var currentFocus;
+
+    inp.addEventListener("click", function (e) {
+        // There's probably a better way to do lazy loading.
+        // Then again, I'm not a JavaScript developer ¯\_(ツ)_/¯
+        if (!loaded) {
+            lazyLoad();
+            loaded = true;
+        }
+    });
+
+    inp.addEventListener("input", function (e) {
+        var a, b, i, val = this.value;
+
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) {
+            return false;
+        }
+        currentFocus = -1;
+
+        /* Create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+
+        /* Append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+
+        let arr = search(val, 5);
+
+        for (i = 0; i < arr.length; i++) {
+            let elem = arr[i];
+
+            b = document.createElement("DIV");
+            b.innerHTML = elem[0];
+
+            b.addEventListener("click", function (e) {
+                window.location.href = `${elem[1]}?q=${encodeURIComponent(val)}`;
+            });
+            a.appendChild(b);
+        }
+    });
+
+    inp.addEventListener("keydown", function (e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+            /* If the arrow DOWN key is pressed,
+            increase the currentFocus variable:*/
+            currentFocus++;
+            /* and and make the current item more visible:*/
+            addActive(x);
+        } else if (e.keyCode == 38) { //up
+            /* If the arrow UP key is pressed,
+            decrease the currentFocus variable:*/
+            currentFocus--;
+            /* and and make the current item more visible:*/
+            addActive(x);
+        } else if (e.keyCode == 13) {
+            /* If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault();
+            if (currentFocus > -1) {
+                /* and simulate a click on the "active" item:*/
+                if (x) x[currentFocus].click();
+            }
+        }
+    });
+
+    function addActive(x) {
+        /* A function to classify an item as "active":*/
+        if (!x) return false;
+        /* Start by removing the "active" class on all items:*/
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /* Add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active");
+    }
+
+    function removeActive(x) {
+        /* A function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    }
+
+    function closeAllLists(elmnt) {
+        /* Close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    }
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+}
+autocomplete(document.getElementById("tinysearch"));
+</script>
+
+<form id="searchbox" autocomplete="off">
+    <div class="autocomplete">
+        <input id="tinysearch" type="text" aria-label="Search articles" placeholder="&#x1F50D; Search articles">
+    </div>
+</form>
+#+END_SRC
+#+BEGIN_EXPORT html
+  </details>
+  #+END_EXPORT
+
+
+And finally, some CSS to make the search box and results pop-up look nice:
+#+BEGIN_SRC css :tangle "static/css/astrochelys.css"
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.autocomplete-items {
+  position: absolute;
+  font-size: 0.7em;
+  width: 100%;
+  color: var(--text-color);
+}
+
+.autocomplete-items div {
+  cursor: pointer;
+  background-color: var(--bg-color-main);
+  border: 0.1em dashed var(--main-color);
+}
+
+.autocomplete-items div:hover,
+.autocomplete-active {
+ font-weight: bold;
+}
+#+END_SRC
+
+Great! With all this set up, adding a search box to a page is as simple as adding ~{% include "snippets/search.html" %}~
+wherever we want it to be; you may have noticed it already in the [[Sidebar][Sidebar]].
+
+* Next steps
+We're pretty happy with this theme for now. If we get bored of the color scheme, we just need to pick a new (pygmentizable) syntax highlighting theme and change the colors accordingly. 
+
+Some comments / issues:
++ The search doesn't seem to work on mobile, need to look into that.
++ The sidebar could use a section for things like GitHub links.
++ Maybe a dark mode? ([[https://timvisee.com/blog/dark-mode-toggle-on-static-website/][Like here]])
++ Some vector art could be nice, [[https://en.wikipedia.org/wiki/Radiated_tortoise][/Astrochelys radiata/]] perhaps. 

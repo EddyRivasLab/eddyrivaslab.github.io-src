@@ -1,0 +1,3 @@
+[submodule "eddyrivaslab.github.io"]
+	path = eddyrivaslab.github.io
+	url = git@github.com:EddyRivasLab/eddyrivaslab.github.io.git
