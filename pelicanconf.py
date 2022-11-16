@@ -1,9 +1,11 @@
+PLUGIN_PATHS = ['pelican-plugins'] 
+PLUGINS = ['assets', 'pelican-toc']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = ''
 
 PATH = 'content'
-THEME = "./astrochelys"
+#THEME = "./astrochelys"
 TAG_SAVE_AS = ''
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
