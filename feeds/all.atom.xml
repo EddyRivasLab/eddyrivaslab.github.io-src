@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Eddy and Rivas Labs Resource Page</title><link href="https://eddyrivaslab.github.io/" rel="alternate"></link><link href="https://eddyrivaslab.github.io/feeds/all.atom.xml" rel="self"></link><id>https://eddyrivaslab.github.io/</id><updated>2022-11-16T00:00:00-05:00</updated><entry><title>Cluster computing in the Eddy and Rivas Labs</title><link href="https://eddyrivaslab.github.io/cluster-computing-in-the-eddy-and-rivas-labs.html" rel="alternate"></link><published>2022-11-16T00:00:00-05:00</published><updated>2022-11-16T00:00:00-05:00</updated><author><name>A cast of tens</name></author><id>tag:eddyrivaslab.github.io,2022-11-16:/cluster-computing-in-the-eddy-and-rivas-labs.html</id><summary type="html">&lt;h1 id="cluster-computing-in-the-eddy-and-rivas-labs"&gt;Cluster computing in the Eddy and Rivas labs&lt;/h1&gt;
+&lt;p&gt;Our high performance cluster computing is managed by
+&lt;a href="https://www.rc.fas.harvard.edu/"&gt;Harvard Research Computing&lt;/a&gt; (RC).&lt;/p&gt;
+&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Your RC &lt;em&gt;home directory&lt;/em&gt; is something like &lt;code&gt;/n/home01/&amp;lt;username&amp;gt;&lt;/code&gt;.
+When you log in, that's where you'll land. You have 100GB of space
+here. &lt;/p&gt;
+&lt;p&gt;Our &lt;em&gt;lab storage&lt;/em&gt; is &lt;code&gt;/n …&lt;/code&gt;&lt;/p&gt;</summary><content type="html">&lt;h1 id="cluster-computing-in-the-eddy-and-rivas-labs"&gt;Cluster computing in the Eddy and Rivas labs&lt;/h1&gt;
+&lt;p&gt;Our high performance cluster computing is managed by
+&lt;a href="https://www.rc.fas.harvard.edu/"&gt;Harvard Research Computing&lt;/a&gt; (RC).&lt;/p&gt;
+&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Your RC &lt;em&gt;home directory&lt;/em&gt; is something like &lt;code&gt;/n/home01/&amp;lt;username&amp;gt;&lt;/code&gt;.
+When you log in, that's where you'll land. You have 100GB of space
+here. &lt;/p&gt;
+&lt;p&gt;Our &lt;em&gt;lab storage&lt;/em&gt; is &lt;code&gt;/n/eddy_lab/&lt;/code&gt;. We have 400TB of what RC calls
+Tier 1 storage. &lt;/p&gt;
+&lt;p&gt;Both your home directory and our lab storage are backed up nightly to
+what RC calls &lt;em&gt;snapshots&lt;/em&gt;, and periodically to what RC calls &lt;em&gt;disaster
+recovery&lt;/em&gt; (DR) backups.&lt;/p&gt;
+&lt;p&gt;It's convenient to be able to browse and edit your files on the
+cluster directly from your laptop or desktop without logging into the
+cluster. If you get on the RC VPN, you can remote mount your home
+directory and/or the &lt;code&gt;/n/eddy_lab&lt;/code&gt; lab filesystem on your local
+machine using &lt;code&gt;samba&lt;/code&gt;. (Warning: a samba mount is slow, and may
+sometimes be flaky; don't rely on it except for lightweight tasks.)
+Instructions are below.&lt;/p&gt;
+&lt;p&gt;RC also provides &lt;em&gt;shared scratch storage&lt;/em&gt; for us in
+&lt;code&gt;/n/holyscratch01/eddy_lab&lt;/code&gt;. You have write access here, so at any
+time you can create your own temp directory(s). Best practice is to
+use a directory of your own, in
+&lt;code&gt;/n/holyscratch01/eddy_lab/Users/&amp;lt;username&amp;gt;&lt;/code&gt;. We have a 50TB
+allocation. This space can't be remote mounted, isn't backed up, and
+is automatically deleted after 90 days.&lt;/p&gt;
+&lt;p&gt;You can read
+&lt;a href="https://docs.rc.fas.harvard.edu/kb/cluster-storage/"&gt;more documentation on how RC storage works&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We have three compute partitions dedicated to our lab (the &lt;code&gt;-p&lt;/code&gt;, for
+partition, will make sense when you learn how to launch compute jobs
+with the &lt;code&gt;slurm&lt;/code&gt; scheduler):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;-p eddy:&lt;/strong&gt; 640 cores, 16 nodes (40 cores/node). We use this partition for most of
+  our computing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;-p eddy_gpu:&lt;/strong&gt; 
+  4 GPU nodes [holyb0909,holyb0910,holygpu2c0923,holygpu2c1121].
+  Each holyb node has 4 &lt;a href="https://www.nvidia.com/en-us/data-center/v100/"&gt;NVIDIA Tesla V100 NVLINK GPUs&lt;/a&gt;
+  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].
+  Each holygpu2c node has 8 &lt;a href="https://www.nvidia.com/en-us/data-center/a40/"&gt;NVIDIA Ampere A40 GPUs&lt;/a&gt;
+  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We are awaiting one more GPU node with 4 &lt;a href="https://www.nvidia.com/en-us/data-center/hgx/"&gt;NVIDIA HGX A100 GPUs&lt;/a&gt;
+  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [shipping expected Nov 2022].&lt;/p&gt;
+&lt;p&gt;We use this partition for GPU-enabled machine learning stuff, TensorFlow and the like.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;-p eddy_hmmer:&lt;/strong&gt; 576 cores in 16 nodes. These are older cores
+  (circa 2016). We use this partition for long-running or large jobs, to
+  keep them from getting in people's way on &lt;code&gt;-p eddy&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We are awaiting installation of another 1536 CPU cores (in 24 nodes,
+64 cores/node) [expected fall 2022].&lt;/p&gt;
+&lt;p&gt;We can also use Harvard-wide shared partitions on the RC cluster. &lt;code&gt;-p
+shared&lt;/code&gt; is 17,952 cores (in 375 nodes), for example. RC has
+&lt;a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions"&gt;much more documentation on available partitions&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="accessing-the-cluster"&gt;Accessing the cluster&lt;/h2&gt;
+&lt;h3 id="logging-on-first-time"&gt;logging on, first time&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Get a &lt;a href="https://rc.fas.harvard.edu/resources/faq/how-do-i-get-a-research-computing-account/"&gt;Research Computing (RC) account&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Read about how to &lt;a href="https://docs.rc.fas.harvard.edu/kb/access-and-login/"&gt;access the RC cluster&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install &lt;a href="https://docs.rc.fas.harvard.edu/kb/openauth/"&gt;OpenAuth two-factor authentication&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Behold the glory of
+  &lt;a href="https://docs.rc.fas.harvard.edu/"&gt;RC's extensive documentation&lt;/a&gt;,
+  where most questions you have about RC are answered.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you chose to install their little Java OpenAuth application on your
+  machine to generate your OpenAuth codes (instead of using Duo Mobile
+  or Google Authenticator on your smart phone), it's convenient to
+  make an alias for launching it. In my &lt;code&gt;.bashrc&lt;/code&gt;, I have &lt;code&gt;alias
+  ody-auth='~/sw/seddy-openauth/seddy-openauth.sh &amp;amp;'&lt;/code&gt;, so I can launch
+  my authenticator on the commandline with &lt;code&gt;ody-auth&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You should be able to ssh into the cluster now. With your username in
+place of mine (&lt;code&gt;seddy&lt;/code&gt;), do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;seddy&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fas&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;harvard&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It'll ask for your RC password and an OpenAuth two-factor
+authentication key.&lt;/p&gt;
+&lt;h3 id="configuring-an-ssh-host-alias"&gt;configuring an ssh host alias&lt;/h3&gt;
+&lt;p&gt;Once you're using the cluster a lot, you can save yourself some typing
+by setting up a host alias. Mine is called &lt;strong&gt;ody&lt;/strong&gt;, because the RC
+cluster used to be called Odyssey.  Add something like this to your
+&lt;code&gt;.ssh/config&lt;/code&gt; file, using your preferred host alias in place of &lt;code&gt;ody&lt;/code&gt;
+and your username in place of &lt;code&gt;seddy&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Host                  ody
+  HostName            login.rc.fas.harvard.edu
+  User                seddy
+  Compression         yes
+  ForwardX11Trusted   yes
+  ServerAliveInterval &lt;span class="m"&gt;30&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you can access RC just by:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;% ssh ody&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You still have to authenticate by password and OpenAuth code, though.&lt;/p&gt;
+&lt;h3 id="configuring-single-sign-on-scp-access"&gt;configuring single sign-on scp access&lt;/h3&gt;
+&lt;p&gt;It can get tedious to have to authenticate every time you &lt;code&gt;ssh&lt;/code&gt; to RC,
+especially if you're using ssh-based tools like &lt;code&gt;scp&lt;/code&gt; to copy
+individual files back and forth.  You can streamline this using
+&lt;a href="https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/"&gt;SSH ControlMaster for single sign-on&lt;/a&gt;,
+to open a single &lt;code&gt;ssh&lt;/code&gt; connection that you authenticate once, and all
+subsequent &lt;code&gt;ssh&lt;/code&gt;-based traffic to RC goes via that connection.&lt;/p&gt;
+&lt;p&gt;RC's
+&lt;a href="https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/"&gt;instructions are here&lt;/a&gt;
+but briefly:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add another hostname alias to your &lt;code&gt;.ssh/config&lt;/code&gt; file. Mine is
+  called &lt;strong&gt;odx&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Host              odx
+   User           seddy
+   HostName       login.rc.fas.harvard.edu
+   ControlMaster  auto
+   ControlPath    ~/.ssh/%r@%h:%p
+   ControlPersist yes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Add some aliases to your &lt;code&gt;.bashrc&lt;/code&gt; file:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;   &lt;span class="nb"&gt;alias&lt;/span&gt; odx-start&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'ssh -Y -o ServerAliveInterval=30 -fN odx'&lt;/span&gt;   
+   &lt;span class="nb"&gt;alias&lt;/span&gt; odx-stop&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'ssh -O stop odx'&lt;/span&gt;
+   &lt;span class="nb"&gt;alias&lt;/span&gt; odx-kill&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'ssh -O exit odx'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you can launch a session with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;% odx-start&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It'll ask you to authenticate. After you do this, all your ssh-based
+commands (in any terminal window) will work without further
+authentication. To stop the connection, do&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;% odx-stop&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you forget to stop it, no big deal, the connection will eventually
+time out by itself.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="accessing-our-storage_1"&gt;Accessing our storage&lt;/h2&gt;
+&lt;h3 id="set-up-vpn-access"&gt;set up VPN access&lt;/h3&gt;
+&lt;p&gt;You don't need to be on the RC VPN to log in to the cluster, but you do
+need to be on the VPN if you want to mount any of our RC storage on
+your local machine.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set up &lt;a href="https://rc.fas.harvard.edu/resources/vpn-setup/"&gt;VPN access to Odyssey&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="mounting-our-lab-filesystem-on-your-machine"&gt;mounting our lab filesystem on your machine&lt;/h3&gt;
+&lt;p&gt;You need to be on the RC VPN to remote mount our filesystem.&lt;/p&gt;
+&lt;p&gt;From the Mac OS/X Finder, choose Go-&amp;gt;Connect To Server, and give it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;   smb://eddyfs.rc.fas.harvard.edu/eddy_lab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It will mount at &lt;code&gt;/Volumes/eddy_lab&lt;/code&gt; on your local machine, and it
+will show up in Locations in the Finder. &lt;/p&gt;
+&lt;p&gt;If your username on your local machine is different from your username
+on the cluster, make that URL &lt;code&gt;smb://&amp;lt;username&amp;gt;:eddyfs.rc.fas.harvard.edu/eddy_lab&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To use the OS/X command line instead of the Finder GUI:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;   &lt;span class="c1"&gt;# to mount:&lt;/span&gt;
+   % osascript -e &lt;span class="err"&gt;'&lt;/span&gt;mount volume &lt;span class="s2"&gt;"smb://eddyfs.rc.fas.harvard.edu/eddy_lab`&lt;/span&gt;
+&lt;span class="s2"&gt;   # to unmount:&lt;/span&gt;
+&lt;span class="s2"&gt;   &lt;/span&gt;$&lt;span class="s2"&gt; umount /Volumes/eddy_lab&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can also samba-mount your cluster home directory [&lt;a href="https://docs.rc.fas.harvard.edu/kb/mounting-storage/"&gt;RC
+documentation is
+here&lt;/a&gt;]. Figure
+out where your home dir is (&lt;code&gt;cd; pwd&lt;/code&gt;). It's something like
+&lt;code&gt;/n/homeXX/&amp;lt;username&amp;gt;&lt;/code&gt;; mine is &lt;code&gt;/n/home14/seddy&lt;/code&gt;. The URL to samba
+mount my home dir is
+&lt;code&gt;smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy&lt;/code&gt;. Replace those
+last two bits with your own &lt;code&gt;homeXX/&amp;lt;username&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I have these aliased in my &lt;code&gt;.bashrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ody&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"osascript -e 'mount volume &lt;/span&gt;&lt;span class="se"&gt;\"&lt;/span&gt;&lt;span class="s2"&gt;smb://eddyfs.rc.fas.harvard.edu/eddy_lab&lt;/span&gt;&lt;span class="se"&gt;\"&lt;/span&gt;&lt;span class="s2"&gt;'"&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ody&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"osascript -e 'mount volume &lt;/span&gt;&lt;span class="se"&gt;\"&lt;/span&gt;&lt;span class="s2"&gt;smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy&lt;/span&gt;&lt;span class="se"&gt;\"&lt;/span&gt;&lt;span class="s2"&gt;'"&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ody&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;umount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'umount /Volumes/eddy_lab'&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ody&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;umount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'umount /Volumes/seddy'&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;All reputable people say it's important to remember to unmount the
+filesystem before you do something that breaks the network connection
+(like logging out of the VPN). On the other hand, I routinely forget,
+and nothing has imploded yet.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="accessing-our-shared-data-genomes-seq-dbs_1"&gt;Accessing our shared data (genomes, seq db's)&lt;/h2&gt;
+&lt;p&gt;Many standard sequence databases are installed in
+&lt;code&gt;/n/eddy_lab/data/&lt;/code&gt; including
+Pfam, Rfam, and UniProt.&lt;/p&gt;
+&lt;p&gt;Many genome and transcriptome datasets are installed in
+&lt;code&gt;/n/eddy_lab/genomes/&lt;/code&gt;.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h2 id="working-on-the-cluster"&gt;Working on the cluster&lt;/h2&gt;
+&lt;p&gt;RC has a zillion software packages installed and available, but most
+are not in your &lt;code&gt;${PATH}&lt;/code&gt; by default. You load an available package
+with the &lt;code&gt;module&lt;/code&gt; command. For example, &lt;code&gt;module load hmmer&lt;/code&gt; loads RC's
+current installed version of HMMER, and &lt;code&gt;module load blast&lt;/code&gt; loads
+BLAST. &lt;code&gt;module avail&lt;/code&gt; lets you behold (almost) everything available,
+though it takes a while to run.&lt;/p&gt;
+&lt;p&gt;You generally work on RC using the SLURM batch scheduler either to
+obtain interactive command-line access to a compute node, or to
+schedule jobs to run on compute nodes. You shouldn't do any
+substantial computation on login nodes. The &lt;code&gt;sbatch&lt;/code&gt; command submits
+batch scripts to SLURM for later execution.  The &lt;code&gt;srun&lt;/code&gt; command runs a
+single command on our compute resources interactively.  The &lt;code&gt;sbatch
+--wrap="&amp;lt;cmd&amp;gt;"&lt;/code&gt; option submits a single command into the batch queue,
+and is the most common way that I send jobs to the cluster.&lt;/p&gt;
+&lt;p&gt;The notes below give useful &lt;code&gt;module&lt;/code&gt; and SLURM incantations without a
+ton of explication. More thorough RC documentation to skim includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.rc.fas.harvard.edu/kb/modules-intro/"&gt;Using modules&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.rc.fas.harvard.edu/kb/quickstart-guide/"&gt;Cluster Quick Start Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/"&gt;Running Jobs (with SLURM)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-module-command-compiling-software"&gt;the module command; compiling software&lt;/h3&gt;
+&lt;p&gt;It's ok to compile on a login node (but that's about it). My usual
+pre-incantation before working on development of our software (HMMER,
+Infernal, Easel):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gcc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;valgrind&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This loads the &lt;code&gt;gcc&lt;/code&gt; compiler, an up-to-date version of &lt;code&gt;git&lt;/code&gt;, the
+&lt;code&gt;valgrind&lt;/code&gt; memory debugging tools, and Python3 (the default python on
+RC is Python2).&lt;/p&gt;
+&lt;p&gt;Other &lt;code&gt;module&lt;/code&gt; command examples:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;intel&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;# Intel icc compiler instead&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gcc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;openmpi&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# for MPI parallel software, usually I use gcc/OpenMPI&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;avail&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="c1"&gt;# show list of immediately available modules&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;avail&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;openmpi&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;# show list of available openmpi modules (there may be different versions installed)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="c1"&gt;# list my currently loaded modules&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gcc&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;# unload a module&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;swap&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;intel&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gcc&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# swap one module out (intel icc) for another (gcc)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;purge&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="c1"&gt;# unload all modules&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gcc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;7.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fasrc01&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;binutils&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.29&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fasrc01&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="c1"&gt;# sometimes we need to be very specific about versions&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id="get-an-interactive-cpu-node"&gt;get an interactive cpu node&lt;/h3&gt;
+&lt;p&gt;Depends on whether you just need a single cpu core (most common),
+several cores (for multithreaded software like BLAST or HMMER), or an
+entire compute node (40 cores, for the nodes in our &lt;code&gt;-p eddy&lt;/code&gt;
+partition). My standard incantations are:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;srun&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;eddy&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;--pty&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;6-00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bash&lt;/span&gt;&lt;span class="w"&gt;                      &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;srun&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;eddy&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;--pty&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;6-00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;8&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bash&lt;/span&gt;&lt;span class="w"&gt;                 &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;multiple&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;cores&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;here&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;srun&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;eddy&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;--pty&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;6-00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;-c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;40&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;--exclusive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;bash&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;entire&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;node&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-p eddy&lt;/code&gt; says you want one of the nodes in our main cpu partition. &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--pty&lt;/code&gt; says you want an interactive terminal.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t 6-00:00&lt;/code&gt; says you want it assigned to you for up to 6
+  days. You're not going to use it that long - you're going to log out
+  when you're done (right?), but RC needs you to specify an estimated
+  time.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c 8&lt;/code&gt; or &lt;code&gt;-c 40&lt;/code&gt; says you want to use 8 or 40 cores (or whatever). All the machines in
+  the &lt;code&gt;-p eddy&lt;/code&gt; partition have 40 cores. I think if you don't specify
+  this, even if you get exclusive access to the node, you may only be
+  able to use 1 core on it.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--exclusive&lt;/code&gt; says that no other job will be allowed to start on
+  your node while you're using it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="run-one-command"&gt;run one command&lt;/h3&gt;
+&lt;p&gt;The most common way I submit tasks to the cluster is one command at a
+time.  The &lt;code&gt;--wrap&lt;/code&gt; option to &lt;code&gt;sbatch&lt;/code&gt; lets you submit a job without
+having to write a SLURM script for it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    sbatch -t 6-00:00 -p eddy -c 4 -N 1 --wrap="hmmsearch --cpu 4 fn3.hmm /n/eddyfs01/data/dbs/Uniprot/uniprot_sprot.fasta"
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;hmmsearch&lt;/code&gt; is multithreaded; I'm matching the number of cores I
+request from SLURM (&lt;code&gt;-c 4&lt;/code&gt;) to the number of cores I'm telling
+hmmsearch to use (&lt;code&gt;--cpu 4&lt;/code&gt;), and telling SLURM I want them all on one
+compute node (&lt;code&gt;-N 1&lt;/code&gt;). For a non-parallel program, you'd leave off the
+&lt;code&gt;-c 4&lt;/code&gt; in the &lt;code&gt;sbatch&lt;/code&gt; options.&lt;/p&gt;
+&lt;p&gt;The stdout goes to a SLURM outfile, something like
+&lt;code&gt;slurm-56384497.out&lt;/code&gt;. Or you can add a shell redirect &lt;code&gt;&amp;gt; foo.out&lt;/code&gt; to
+your &lt;code&gt;--wrap&lt;/code&gt; command if you like.&lt;/p&gt;
+&lt;h3 id="running-a-few-commands-looping-over-some-input-files"&gt;running a few commands, looping over some input files&lt;/h3&gt;
+&lt;p&gt;A couple of examples of ways to submit several commands at once:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    ls *.gz | xargs -I {}  sbatch --wrap="gunzip -c {}"   # uncompress all .gz files in this directory
+
+    for FILE in *.fa; do
+      echo &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;FILE&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+      sbatch -p eddy -t 10 --wrap="gzip &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;FILE&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;"          # compress all .fa files in this directory
+      sleep 1                                             # pausing between submissions to be kind to the scheduler
+    done
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id="writing-an-sbatch-script"&gt;writing an sbatch script&lt;/h3&gt;
+&lt;p&gt;If your job is more complicated than a single command - for example,
+if it depends on loading software with a &lt;code&gt;module load&lt;/code&gt; command first -
+you can write an &lt;code&gt;sbatch&lt;/code&gt; script. The SLURM options go into the
+script, instead of on the &lt;code&gt;sbatch&lt;/code&gt; command line, using a special
+format. An example that (stupidly) loads gcc and just calls
+&lt;code&gt;hostname&lt;/code&gt;, so the output will be the name of the compute node the
+script ran on:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span class="normal"&gt; 1&lt;/span&gt;
+&lt;span class="normal"&gt; 2&lt;/span&gt;
+&lt;span class="normal"&gt; 3&lt;/span&gt;
+&lt;span class="normal"&gt; 4&lt;/span&gt;
+&lt;span class="normal"&gt; 5&lt;/span&gt;
+&lt;span class="normal"&gt; 6&lt;/span&gt;
+&lt;span class="normal"&gt; 7&lt;/span&gt;
+&lt;span class="normal"&gt; 8&lt;/span&gt;
+&lt;span class="normal"&gt; 9&lt;/span&gt;
+&lt;span class="normal"&gt;10&lt;/span&gt;
+&lt;span class="normal"&gt;11&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -c 1        # Number of cores/threads&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -N 1        # Ensure that all cores are on one machine&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -t 6-00:00  # Runtime in D-HH:MM&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -p eddy     # Partition to submit to&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH --mem=4000  # Memory pool for all cores (see also --mem-per-cpu)&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -o myjob_%j.out     # File to which STDOUT will be written; %j is the job number assigned by SLURM&lt;/span&gt;
+&lt;span class="c1"&gt;#SBATCH -e myjob_%j.err     # File to which STDERR will be written&lt;/span&gt;
+
+module load gcc
+hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;p&gt;Save this to a file (&lt;code&gt;foo.sh&lt;/code&gt; for example) and submit it with &lt;code&gt;sbatch&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    sbatch foo.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id="running-lots-of-commands"&gt;running lots of commands&lt;/h3&gt;
+&lt;p&gt;If you have to submit lots of jobs (hundreds or thousands) to the
+cluster at once, the preferred way to do it is with &lt;strong&gt;job arrays&lt;/strong&gt;, to
+avoid overloading the scheduler. See the
+&lt;a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/#Job_arrays"&gt;RC documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="monitoring-your-running-jobs"&gt;monitoring your running jobs&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;sinfo&lt;/code&gt; command shows information about what's currently running where.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sinfo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;eddy&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# show the state of the `eddy` partition&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sinfo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;# show the state of all RC partitions&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;sacct&lt;/code&gt; command shows SLURM log info about jobs you ran in the past.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sacct&lt;/span&gt;&lt;span class="w"&gt;                                                      &lt;/span&gt;&lt;span class="c1"&gt;# default log&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sacct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="k"&gt;format&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;jobid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;jobname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cputime&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;elapsed&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;maxrss&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# custom-formatted to get cputime (`cputime`), max mem (`maxrss`) used&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sacct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="k"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;B1n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;&lt;span class="w"&gt;                                      &lt;/span&gt;&lt;span class="c1"&gt;# --name=&amp;lt;jobname&amp;gt; to see a particular job&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sacct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2020&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;03&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;29&lt;/span&gt;&lt;span class="w"&gt;                                        &lt;/span&gt;&lt;span class="c1"&gt;# see jobs you started on 3/29/2020&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id="etiquette"&gt;etiquette&lt;/h3&gt;
+&lt;p&gt;We have two partitions, &lt;code&gt;-p eddy&lt;/code&gt; with 640 cores and 4.8GB RAM/core
+and &lt;code&gt;-p eddy_hmmer&lt;/code&gt; with 576 slower cores and 3.7GB/core.  We often
+use &lt;code&gt;-p eddy&lt;/code&gt; for daily work (where we want stuff to be
+near-interactive, finishing in minutes not hours). If you submit 600+
+long-running jobs to &lt;code&gt;-p eddy&lt;/code&gt;, nobody else can use it for a while.
+To avoid getting in each others' way on &lt;code&gt;-p eddy&lt;/code&gt;, at any one time,
+please limit your resource use to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lt;50% of the cores (320)&lt;/li&gt;
+&lt;li&gt;&amp;lt;50% of the RAM per node (96G) OR &amp;lt;4.8GB/core&lt;/li&gt;
+&lt;li&gt;&amp;lt;30min per job&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Larger workloads can be sent to the &lt;code&gt;-p eddy_hmmer&lt;/code&gt; queue, our night
+train, without any etiquette on job number, memory piggishness, or
+time.&lt;/p&gt;
+&lt;p&gt;The &amp;lt;320 core, &amp;lt;96G/node|&amp;lt;4.8G/core memory, &amp;lt;30min guidelines are just
+guidelines.  The principle is what's important.  Nobody should have to
+wait &amp;gt;30min to get their job to start running on &lt;code&gt;-p eddy&lt;/code&gt;. If you
+cause such pain, there may be public shaming and/or donut penalty.
+Launching one job that takes a day to complete, or a thousand
+10-second jobs is not going to get in anyone's way either. Conversely,
+it's possible that three or more people in the lab could try to occupy
+50% of our resources at a time and jam us up, so use &lt;code&gt;sinfo -p eddy&lt;/code&gt;
+to see how busy things are and be reasonable.&lt;/p&gt;
+&lt;p&gt;You can also add &lt;code&gt;--nice 1000&lt;/code&gt; to your &lt;code&gt;sbatch&lt;/code&gt; command, to downgrade
+your running priority in the queue, which helps let other people's
+jobs get run before yours.&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Modifying This Website</title><link href="https://eddyrivaslab.github.io/modifying-this-website.html" rel="alternate"></link><published>2022-11-16T00:00:00-05:00</published><updated>2022-11-16T00:00:00-05:00</updated><author><name>A cast of tens</name></author><id>tag:eddyrivaslab.github.io,2022-11-16:/modifying-this-website.html</id><content type="html">&lt;h1 id="modifying-this-website"&gt;Modifying This Website&lt;/h1&gt;</content><category term="misc"></category></entry><entry><title>Testing Math Equations</title><link href="https://eddyrivaslab.github.io/testing-math-equations.html" rel="alternate"></link><published>2022-11-16T00:00:00-05:00</published><updated>2022-11-16T00:00:00-05:00</updated><author><name>A cast of tens</name></author><id>tag:eddyrivaslab.github.io,2022-11-16:/testing-math-equations.html</id><content type="html">&lt;h1 id="testing-math-equations"&gt;Testing Math Equations&lt;/h1&gt;
+&lt;p&gt;$\frac{3x^2}{7j_3}$&lt;/p&gt;</content><category term="misc"></category></entry></feed>
