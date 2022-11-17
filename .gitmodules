@@ -3,4 +3,4 @@
 	url = git@github.com:EddyRivasLab/eddyrivaslab.github.io.git
 [submodule "output"]
 	path = output
-	url = git@github.com:eddyrivaslab/eddyrivaslab.github.io.git
+	url = git@github.com:EddyRivasLab/eddyrivaslab.github.io.git

@@ -1,5 +1,5 @@
 PLUGIN_PATHS = ['pelican-plugins'] 
-PLUGINS = ['assets', 'pelican-toc']
+PLUGINS = ['assets', 'pelican-toc', 'latex']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = ''
