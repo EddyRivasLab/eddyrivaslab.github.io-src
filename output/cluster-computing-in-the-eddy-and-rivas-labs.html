@@ -35,10 +35,10 @@
         </address>
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
-</footer><!-- /.post-info -->      <h1 id="cluster-computing-in-the-eddy-and-rivas-labs">Cluster computing in the Eddy and Rivas labs</h1>
+</footer><!-- /.post-info -->      <h1>Cluster computing in the Eddy and Rivas labs</h1>
 <p>Our high performance cluster computing is managed by
 <a href="https://www.rc.fas.harvard.edu/">Harvard Research Computing</a> (RC).</p>
-<h2 id="overview">Overview</h2>
+<h2>Overview</h2>
 <p>Your RC <em>home directory</em> is something like <code>/n/home01/&lt;username&gt;</code>.
 When you log in, that's where you'll land. You have 100GB of space
 here. </p>
@@ -93,8 +93,8 @@ with the <code>slurm</code> scheduler):</p>
 <p>We can also use Harvard-wide shared partitions on the RC cluster. <code>-p
 shared</code> is 17,952 cores (in 375 nodes), for example. RC has
 <a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions">much more documentation on available partitions</a>.</p>
-<h2 id="accessing-the-cluster">Accessing the cluster</h2>
-<h3 id="logging-on-first-time">logging on, first time</h3>
+<h2>Accessing the cluster</h2>
+<h3>logging on, first time</h3>
 <ul>
 <li>Get a <a href="https://rc.fas.harvard.edu/resources/faq/how-do-i-get-a-research-computing-account/">Research Computing (RC) account</a>.</li>
 <li>Read about how to <a href="https://docs.rc.fas.harvard.edu/kb/access-and-login/">access the RC cluster</a></li>
@@ -119,9 +119,10 @@ shared</code> is 17,952 cores (in 375 nodes), for example. RC has
 place of mine (<code>seddy</code>), do:</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="o">%</span><span class="w"> </span><span class="n">ssh</span><span class="w"> </span><span class="n">seddy</span><span class="err">@</span><span class="n">login</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">fas</span><span class="o">.</span><span class="n">harvard</span><span class="o">.</span><span class="n">edu</span><span class="w"></span>
 </code></pre></div>
+
 <p>It'll ask for your RC password and an OpenAuth two-factor
 authentication key.</p>
-<h3 id="configuring-an-ssh-host-alias">configuring an ssh host alias</h3>
+<h3>configuring an ssh host alias</h3>
 <p>Once you're using the cluster a lot, you can save yourself some typing
 by setting up a host alias. Mine is called <strong>ody</strong>, because the RC
 cluster used to be called Odyssey.  Add something like this to your
@@ -134,11 +135,13 @@ and your username in place of <code>seddy</code>:</p>
   ForwardX11Trusted   yes
   ServerAliveInterval <span class="m">30</span>
 </code></pre></div>
+
 <p>Now you can access RC just by:</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c">% ssh ody</span><span class="w"></span>
 </code></pre></div>
+
 <p>You still have to authenticate by password and OpenAuth code, though.</p>
-<h3 id="configuring-single-sign-on-scp-access">configuring single sign-on scp access</h3>
+<h3>configuring single sign-on scp access</h3>
 <p>It can get tedious to have to authenticate every time you <code>ssh</code> to RC,
 especially if you're using ssh-based tools like <code>scp</code> to copy
 individual files back and forth.  You can streamline this using
@@ -159,47 +162,53 @@ but briefly:</p>
    ControlPath    ~/.ssh/%r@%h:%p
    ControlPersist yes
 </code></pre></div>
+
 <ul>
 <li>Add some aliases to your <code>.bashrc</code> file:</li>
 </ul>
-<div class="highlight"><pre><span></span><code>   <span class="nb">alias</span> odx-start<span class="o">=</span><span class="s1">'ssh -Y -o ServerAliveInterval=30 -fN odx'</span>   
-   <span class="nb">alias</span> odx-stop<span class="o">=</span><span class="s1">'ssh -O stop odx'</span>
-   <span class="nb">alias</span> odx-kill<span class="o">=</span><span class="s1">'ssh -O exit odx'</span>
+<div class="highlight"><pre><span></span><code>   <span class="nb">alias</span> odx-start<span class="o">=</span><span class="s1">&#39;ssh -Y -o ServerAliveInterval=30 -fN odx&#39;</span>   
+   <span class="nb">alias</span> odx-stop<span class="o">=</span><span class="s1">&#39;ssh -O stop odx&#39;</span>
+   <span class="nb">alias</span> odx-kill<span class="o">=</span><span class="s1">&#39;ssh -O exit odx&#39;</span>
 </code></pre></div>
+
 <p>Now you can launch a session with:</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c">% odx-start</span><span class="w"></span>
 </code></pre></div>
+
 <p>It'll ask you to authenticate. After you do this, all your ssh-based
 commands (in any terminal window) will work without further
 authentication. To stop the connection, do</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c">% odx-stop</span><span class="w"></span>
 </code></pre></div>
+
 <p>If you forget to stop it, no big deal, the connection will eventually
 time out by itself.</p>
-<hr/>
-<h2 id="accessing-our-storage_1">Accessing our storage</h2>
-<h3 id="set-up-vpn-access">set up VPN access</h3>
+<hr>
+<h2>Accessing our storage</h2>
+<h3>set up VPN access</h3>
 <p>You don't need to be on the RC VPN to log in to the cluster, but you do
 need to be on the VPN if you want to mount any of our RC storage on
 your local machine.</p>
 <ul>
 <li>Set up <a href="https://rc.fas.harvard.edu/resources/vpn-setup/">VPN access to Odyssey</a>.</li>
 </ul>
-<h3 id="mounting-our-lab-filesystem-on-your-machine">mounting our lab filesystem on your machine</h3>
+<h3>mounting our lab filesystem on your machine</h3>
 <p>You need to be on the RC VPN to remote mount our filesystem.</p>
 <p>From the Mac OS/X Finder, choose Go-&gt;Connect To Server, and give it:</p>
 <div class="highlight"><pre><span></span><code>   smb://eddyfs.rc.fas.harvard.edu/eddy_lab
 </code></pre></div>
+
 <p>It will mount at <code>/Volumes/eddy_lab</code> on your local machine, and it
 will show up in Locations in the Finder. </p>
 <p>If your username on your local machine is different from your username
 on the cluster, make that URL <code>smb://&lt;username&gt;:eddyfs.rc.fas.harvard.edu/eddy_lab</code>.</p>
 <p>To use the OS/X command line instead of the Finder GUI:</p>
 <div class="highlight"><pre><span></span><code>   <span class="c1"># to mount:</span>
-   % osascript -e <span class="err">'</span>mount volume <span class="s2">"smb://eddyfs.rc.fas.harvard.edu/eddy_lab`</span>
+   % osascript -e <span class="err">&#39;</span>mount volume <span class="s2">&quot;smb://eddyfs.rc.fas.harvard.edu/eddy_lab`</span>
 <span class="s2">   # to unmount:</span>
 <span class="s2">   </span>$<span class="s2"> umount /Volumes/eddy_lab</span>
 </code></pre></div>
+
 <p>You can also samba-mount your cluster home directory [<a href="https://docs.rc.fas.harvard.edu/kb/mounting-storage/">RC
 documentation is
 here</a>]. Figure
@@ -209,24 +218,25 @@ mount my home dir is
 <code>smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy</code>. Replace those
 last two bits with your own <code>homeXX/&lt;username&gt;</code>.</p>
 <p>I have these aliased in my <code>.bashrc</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">mount</span><span class="o">=</span><span class="s2">"osascript -e 'mount volume </span><span class="se">\"</span><span class="s2">smb://eddyfs.rc.fas.harvard.edu/eddy_lab</span><span class="se">\"</span><span class="s2">'"</span><span class="w"></span>
-<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">mount</span><span class="o">=</span><span class="s2">"osascript -e 'mount volume </span><span class="se">\"</span><span class="s2">smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy</span><span class="se">\"</span><span class="s2">'"</span><span class="w"></span>
-<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">umount</span><span class="o">=</span><span class="s1">'umount /Volumes/eddy_lab'</span><span class="w"></span>
-<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">umount</span><span class="o">=</span><span class="s1">'umount /Volumes/seddy'</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">mount</span><span class="o">=</span><span class="s2">&quot;osascript -e &#39;mount volume </span><span class="se">\&quot;</span><span class="s2">smb://eddyfs.rc.fas.harvard.edu/eddy_lab</span><span class="se">\&quot;</span><span class="s2">&#39;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">mount</span><span class="o">=</span><span class="s2">&quot;osascript -e &#39;mount volume </span><span class="se">\&quot;</span><span class="s2">smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy</span><span class="se">\&quot;</span><span class="s2">&#39;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">umount</span><span class="o">=</span><span class="s1">&#39;umount /Volumes/eddy_lab&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="n">alias</span><span class="w"> </span><span class="n">ody</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">umount</span><span class="o">=</span><span class="s1">&#39;umount /Volumes/seddy&#39;</span><span class="w"></span>
 </code></pre></div>
+
 <p>All reputable people say it's important to remember to unmount the
 filesystem before you do something that breaks the network connection
 (like logging out of the VPN). On the other hand, I routinely forget,
 and nothing has imploded yet.</p>
-<hr/>
-<h2 id="accessing-our-shared-data-genomes-seq-dbs_1">Accessing our shared data (genomes, seq db's)</h2>
+<hr>
+<h2>Accessing our shared data (genomes, seq db's)</h2>
 <p>Many standard sequence databases are installed in
 <code>/n/eddy_lab/data/</code> including
 Pfam, Rfam, and UniProt.</p>
 <p>Many genome and transcriptome datasets are installed in
 <code>/n/eddy_lab/genomes/</code>.</p>
-<hr/>
-<h2 id="working-on-the-cluster">Working on the cluster</h2>
+<hr>
+<h2>Working on the cluster</h2>
 <p>RC has a zillion software packages installed and available, but most
 are not in your <code>${PATH}</code> by default. You load an available package
 with the <code>module</code> command. For example, <code>module load hmmer</code> loads RC's
@@ -248,12 +258,13 @@ ton of explication. More thorough RC documentation to skim includes:</p>
 <li><a href="https://docs.rc.fas.harvard.edu/kb/quickstart-guide/">Cluster Quick Start Guide</a></li>
 <li><a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/">Running Jobs (with SLURM)</a></li>
 </ul>
-<h3 id="the-module-command-compiling-software">the module command; compiling software</h3>
+<h3>the module command; compiling software</h3>
 <p>It's ok to compile on a login node (but that's about it). My usual
 pre-incantation before working on development of our software (HMMER,
 Infernal, Easel):</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">module</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">gcc</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">valgrind</span><span class="w"> </span><span class="n">python</span><span class="w"></span>
 </code></pre></div>
+
 <p>This loads the <code>gcc</code> compiler, an up-to-date version of <code>git</code>, the
 <code>valgrind</code> memory debugging tools, and Python3 (the default python on
 RC is Python2).</p>
@@ -270,7 +281,8 @@ RC is Python2).</p>
 
 <span class="w">    </span><span class="n">module</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">gcc</span><span class="o">/</span><span class="mf">7.1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">fasrc01</span><span class="w"> </span><span class="n">binutils</span><span class="o">/</span><span class="mf">2.29</span><span class="o">-</span><span class="n">fasrc01</span><span class="w">   </span><span class="c1"># sometimes we need to be very specific about versions</span><span class="w"></span>
 </code></pre></div>
-<h3 id="get-an-interactive-cpu-node">get an interactive cpu node</h3>
+
+<h3>get an interactive cpu node</h3>
 <p>Depends on whether you just need a single cpu core (most common),
 several cores (for multithreaded software like BLAST or HMMER), or an
 entire compute node (40 cores, for the nodes in our <code>-p eddy</code>
@@ -279,6 +291,7 @@ partition). My standard incantations are:</p>
 <span class="w">    </span><span class="nt">srun</span><span class="w"> </span><span class="nt">-p</span><span class="w"> </span><span class="nt">eddy</span><span class="w"> </span><span class="nt">--pty</span><span class="w"> </span><span class="nt">-t</span><span class="w"> </span><span class="nt">6-00</span><span class="p">:</span><span class="nd">00</span><span class="w"> </span><span class="nt">-c</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="o">/</span><span class="nt">bin</span><span class="o">/</span><span class="nt">bash</span><span class="w">                 </span><span class="err">#</span><span class="w"> </span><span class="nt">multiple</span><span class="w"> </span><span class="nt">cores</span><span class="o">;</span><span class="w"> </span><span class="nt">here</span><span class="w"> </span><span class="nt">8</span><span class="w"></span>
 <span class="w">    </span><span class="nt">srun</span><span class="w"> </span><span class="nt">-p</span><span class="w"> </span><span class="nt">eddy</span><span class="w"> </span><span class="nt">--pty</span><span class="w"> </span><span class="nt">-t</span><span class="w"> </span><span class="nt">6-00</span><span class="p">:</span><span class="nd">00</span><span class="w"> </span><span class="nt">-c</span><span class="w"> </span><span class="nt">40</span><span class="w"> </span><span class="nt">--exclusive</span><span class="w"> </span><span class="o">/</span><span class="nt">bin</span><span class="o">/</span><span class="nt">bash</span><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nt">entire</span><span class="w"> </span><span class="nt">node</span><span class="w"></span>
 </code></pre></div>
+
 <ul>
 <li><code>-p eddy</code> says you want one of the nodes in our main cpu partition. </li>
 <li><code>--pty</code> says you want an interactive terminal.</li>
@@ -293,12 +306,13 @@ partition). My standard incantations are:</p>
 <li><code>--exclusive</code> says that no other job will be allowed to start on
   your node while you're using it.</li>
 </ul>
-<h3 id="run-one-command">run one command</h3>
+<h3>run one command</h3>
 <p>The most common way I submit tasks to the cluster is one command at a
 time.  The <code>--wrap</code> option to <code>sbatch</code> lets you submit a job without
 having to write a SLURM script for it.</p>
-<div class="highlight"><pre><span></span><code>    sbatch -t 6-00:00 -p eddy -c 4 -N 1 --wrap="hmmsearch --cpu 4 fn3.hmm /n/eddyfs01/data/dbs/Uniprot/uniprot_sprot.fasta"
+<div class="highlight"><pre><span></span><code>    sbatch -t 6-00:00 -p eddy -c 4 -N 1 --wrap=&quot;hmmsearch --cpu 4 fn3.hmm /n/eddyfs01/data/dbs/Uniprot/uniprot_sprot.fasta&quot;
 </code></pre></div>
+
 <p><code>hmmsearch</code> is multithreaded; I'm matching the number of cores I
 request from SLURM (<code>-c 4</code>) to the number of cores I'm telling
 hmmsearch to use (<code>--cpu 4</code>), and telling SLURM I want them all on one
@@ -307,17 +321,18 @@ compute node (<code>-N 1</code>). For a non-parallel program, you'd leave off th
 <p>The stdout goes to a SLURM outfile, something like
 <code>slurm-56384497.out</code>. Or you can add a shell redirect <code>&gt; foo.out</code> to
 your <code>--wrap</code> command if you like.</p>
-<h3 id="running-a-few-commands-looping-over-some-input-files">running a few commands, looping over some input files</h3>
+<h3>running a few commands, looping over some input files</h3>
 <p>A couple of examples of ways to submit several commands at once:</p>
-<div class="highlight"><pre><span></span><code>    ls *.gz | xargs -I {}  sbatch --wrap="gunzip -c {}"   # uncompress all .gz files in this directory
+<div class="highlight"><pre><span></span><code>    ls *.gz | xargs -I {}  sbatch --wrap=&quot;gunzip -c {}&quot;   # uncompress all .gz files in this directory
 
     for FILE in *.fa; do
       echo <span class="cp">${</span><span class="n">FILE</span><span class="cp">}</span>
-      sbatch -p eddy -t 10 --wrap="gzip <span class="cp">${</span><span class="n">FILE</span><span class="cp">}</span>"          # compress all .fa files in this directory
+      sbatch -p eddy -t 10 --wrap=&quot;gzip <span class="cp">${</span><span class="n">FILE</span><span class="cp">}</span>&quot;          # compress all .fa files in this directory
       sleep 1                                             # pausing between submissions to be kind to the scheduler
     done
 </code></pre></div>
-<h3 id="writing-an-sbatch-script">writing an sbatch script</h3>
+
+<h3>writing an sbatch script</h3>
 <p>If your job is more complicated than a single command - for example,
 if it depends on loading software with a <code>module load</code> command first -
 you can write an <code>sbatch</code> script. The SLURM options go into the
@@ -347,26 +362,30 @@ script ran on:</p>
 module load gcc
 hostname
 </code></pre></div></td></tr></table></div>
+
 <p>Save this to a file (<code>foo.sh</code> for example) and submit it with <code>sbatch</code>:</p>
 <div class="highlight"><pre><span></span><code>    sbatch foo.sh
 </code></pre></div>
-<h3 id="running-lots-of-commands">running lots of commands</h3>
+
+<h3>running lots of commands</h3>
 <p>If you have to submit lots of jobs (hundreds or thousands) to the
 cluster at once, the preferred way to do it is with <strong>job arrays</strong>, to
 avoid overloading the scheduler. See the
 <a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/#Job_arrays">RC documentation</a>.</p>
-<h3 id="monitoring-your-running-jobs">monitoring your running jobs</h3>
+<h3>monitoring your running jobs</h3>
 <p>The <code>sinfo</code> command shows information about what's currently running where.</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">sinfo</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">eddy</span><span class="w">    </span><span class="c1"># show the state of the `eddy` partition</span><span class="w"></span>
 <span class="w">    </span><span class="n">sinfo</span><span class="w"> </span><span class="o">-</span><span class="n">a</span><span class="w">         </span><span class="c1"># show the state of all RC partitions</span><span class="w"></span>
 </code></pre></div>
+
 <p>The <code>sacct</code> command shows SLURM log info about jobs you ran in the past.</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">sacct</span><span class="w">                                                      </span><span class="c1"># default log</span><span class="w"></span>
 <span class="w">    </span><span class="n">sacct</span><span class="w"> </span><span class="o">--</span><span class="k">format</span><span class="o">=</span><span class="n">jobid</span><span class="p">,</span><span class="n">jobname</span><span class="p">,</span><span class="n">state</span><span class="p">,</span><span class="n">cputime</span><span class="p">,</span><span class="n">elapsed</span><span class="p">,</span><span class="n">maxrss</span><span class="w">  </span><span class="c1"># custom-formatted to get cputime (`cputime`), max mem (`maxrss`) used</span><span class="w"></span>
 <span class="w">    </span><span class="n">sacct</span><span class="w"> </span><span class="o">--</span><span class="k">name</span><span class="o">=</span><span class="n">B1n</span><span class="o">-</span><span class="mf">2.</span><span class="n">sh</span><span class="w">                                      </span><span class="c1"># --name=&lt;jobname&gt; to see a particular job</span><span class="w"></span>
 <span class="w">    </span><span class="n">sacct</span><span class="w"> </span><span class="o">-</span><span class="n">S</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">29</span><span class="w">                                        </span><span class="c1"># see jobs you started on 3/29/2020</span><span class="w"></span>
 </code></pre></div>
-<h3 id="etiquette">etiquette</h3>
+
+<h3>etiquette</h3>
 <p>We have two partitions, <code>-p eddy</code> with 640 cores and 4.8GB RAM/core
 and <code>-p eddy_hmmer</code> with 576 slower cores and 3.7GB/core.  We often
 use <code>-p eddy</code> for daily work (where we want stuff to be
