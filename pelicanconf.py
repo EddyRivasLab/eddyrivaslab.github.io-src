@@ -5,11 +5,10 @@ SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = 'pelican-striped-html5up'
 
 PATH = 'content'
-THEME = "pelican-themes/pelican-striped-html5up"
+THEME = "pelican-themes/pelican-bootstrap3"
 TAG_SAVE_AS = ''
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
-PLUGINS = ['pelican-toc']
 DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives'))
 TIMEZONE = 'America/New_York'
 
