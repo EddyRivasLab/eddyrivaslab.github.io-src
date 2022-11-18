@@ -1,5 +1,5 @@
 PLUGIN_PATHS = ['pelican-plugins'] 
-PLUGINS = ['assets', 'pelican-toc', 'latex']
+PLUGINS = ['assets', 'pelican-toc', 'latex','neighbors']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = 'pelican-striped-html5up'
