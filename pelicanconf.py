@@ -11,7 +11,7 @@ AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
 DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives'))
 TIMEZONE = 'America/New_York'
-
+PAGE_PATHS=['pages']
 DEFAULT_LANG = 'en'
 
 # Feed generation is usually not desired when developing
