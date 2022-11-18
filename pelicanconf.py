@@ -2,10 +2,10 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['assets', 'pelican-toc', 'latex']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
-SITEURL = ''
+SITEURL = 'pelican-striped-html5up'
 
 PATH = 'content'
-#THEME = "./astrochelys"
+THEME = ""
 TAG_SAVE_AS = ''
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
