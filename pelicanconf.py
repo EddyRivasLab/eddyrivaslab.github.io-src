@@ -5,7 +5,7 @@ SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = 'eddyrivaslab.github.io'
 
 PATH = 'content'
-THEME = "pelican-themes/pelican-striped-html5up"
+THEME = "./customized"
 TAG_SAVE_AS = ''
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
