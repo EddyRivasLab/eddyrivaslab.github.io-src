@@ -2,3 +2,7 @@
 	path = pelican-plugins
 	url = https://github.com/getpelican/pelican-plugins.git
 	fetchRecursiveSubmodules = true
+[submodule "pelican-themes"]
+	path = pelican-themes
+	url = https://github.com/getpelican/pelican-themes.git
+	fetchRecursiveSubmodules = true
