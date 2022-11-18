@@ -1,5 +1,7 @@
 Title: Cluster computing in the Eddy and Rivas Labs
 Date: 11/16/22
+slug:cluster-computing-in-the-eddy-and-rivas-labs
+Authors: Sean Eddy
 # Cluster computing in the Eddy and Rivas labs
 
 Our high performance cluster computing is managed by
