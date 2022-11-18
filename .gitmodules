@@ -6,3 +6,7 @@
 	path = pelican-themes
 	url = https://github.com/getpelican/pelican-themes.git
 	fetchRecursiveSubmodules = true
+
+[submodule "astrochelys"]
+	path = astrochelys
+	url = https://github.com/out-of-cheese-error/astrochelys.git

@@ -2,10 +2,10 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['assets', 'pelican-toc', 'latex','neighbors']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
-SITEURL = 'pelican-striped-html5up'
+SITEURL = 'eddyrivaslab.github.io'
 
 PATH = 'content'
-THEME = "pelican-themes/pelican-bootstrap3"
+THEME = "pelican-themes/pelican-striped-html5up"
 TAG_SAVE_AS = ''
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
