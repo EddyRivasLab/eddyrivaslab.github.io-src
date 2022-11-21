@@ -2,7 +2,7 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['assets', 'pelican-toc', 'latex','neighbors']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
-SITEURL = 'eddyrivaslab.github.io'
+#SITEURL = 'eddyrivaslab.github.io'
 
 PATH = 'content'
 THEME = "./ath-tufte-pelican"
