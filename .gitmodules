@@ -13,3 +13,6 @@
 [submodule "pelican-tufte"]
 	path = pelican-tufte
 	url = git@github.com:jAniceto/pelican-tufte.git
+[submodule "ath-tufte-pelican"]
+	path = ath-tufte-pelican
+	url = git@github.com:andrewheiss/ath-tufte-pelican.git
