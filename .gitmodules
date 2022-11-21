@@ -10,3 +10,6 @@
 [submodule "astrochelys"]
 	path = astrochelys
 	url = https://github.com/out-of-cheese-error/astrochelys.git
+[submodule "pelican-tufte"]
+	path = pelican-tufte
+	url = git@github.com:jAniceto/pelican-tufte.git
