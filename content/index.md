@@ -1,5 +1,5 @@
-Title: Eddy and Rivas Labs Resource Page
-Date: 11/18/22
+Title: Welcome
+Date: 11/21/22
 Authors: Nick Carter
 category: main
 url:
