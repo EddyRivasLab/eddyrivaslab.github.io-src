@@ -76,13 +76,13 @@ body {
     -webkit-hyphens: auto;
     hyphens: auto; }
   .wrap a, .wrap a:visited {
-    color: #A5452B;
+    color: #A51C30;
     text-decoration: none; }
   .wrap a:hover {
     color: #ECAD49;
     text-decoration: none; }
   .wrap p > a {
-    color: #A5452B;
+    color: #A51C30;
     text-decoration: none; }
   .wrap h1 {
     /*font-family: "Gill Sans", "Gill Sans MT", "Lato", Calibri, sans-serif;*/
