@@ -396,17 +396,7 @@ script, instead of on the <code>sbatch</code> command line, using a special
 format. An example that (stupidly) loads gcc and just calls
 <code>hostname</code>, so the output will be the name of the compute node the
 script ran on:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1">#SBATCH -c 1        # Number of cores/threads</span>
 <span class="c1">#SBATCH -N 1        # Ensure that all cores are on one machine</span>
 <span class="c1">#SBATCH -t 6-00:00  # Runtime in D-HH:MM</span>
@@ -417,7 +407,7 @@ script ran on:</p>
 
 module load gcc
 hostname
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 
 <p>Save this to a file (<code>foo.sh</code> for example) and submit it with <code>sbatch</code>:</p>
 <div class="highlight"><pre><span></span><code>    sbatch foo.sh
