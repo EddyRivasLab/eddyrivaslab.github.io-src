@@ -1,0 +1,1 @@
+pelican content -o output -s pelicanconf.py && ghp-import output -b gh-pages &&git push -f git@github.com:EddyRivasLab/eddyrivaslab.github.io gh-pages:main
