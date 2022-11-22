@@ -14,4 +14,4 @@ $$ \frac{3x^2}{7y_4}$$
 
 Testing from Mac
 
-and more testing and more
+and more testing and more 
