@@ -1,5 +1,5 @@
 PLUGIN_PATHS = ['pelican-plugins'] 
-PLUGINS = ['assets', 'latex','neighbors']
+PLUGINS = ['assets', 'neighbors','render_math']
 AUTHOR = 'A cast of tens'
 SITENAME = 'Eddy and Rivas Labs Resource Page'
 SITEURL = 'https://eddyrivaslab.github.io'
