@@ -22,6 +22,10 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 
+ARTICLE_PATHS = ['author',]
+ARTICLE_URL = 'author/{slug}.html'
+ARTICLE_SAVE_AS = 'author/{slug}.html'
+
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
