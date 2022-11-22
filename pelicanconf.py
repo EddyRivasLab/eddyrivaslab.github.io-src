@@ -6,12 +6,11 @@ SITEURL = 'https://eddyrivaslab.github.io'
 
 PATH = 'content'
 THEME = "./customized"
-TAG_SAVE_AS = ''
-AUTHOR_SAVE_AS = ''
-CATEGORY_SAVE_AS = ''
+
 DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives'))
 TIMEZONE = 'America/New_York'
 PAGE_PATHS=['pages']
+PAGE_URL =
 DEFAULT_LANG = 'en'
 USE_FOLDER_AS_CATEGORY=True
 # Feed generation is usually not desired when developing
@@ -25,7 +24,9 @@ AUTHOR_FEED_RSS = None
 ARTICLE_PATHS = ['author',]
 ARTICLE_URL = 'author/{slug}.html'
 ARTICLE_SAVE_AS = 'author/{slug}.html'
-
+PAGE_PATHS = ['pages']
+PAGE_URL = 'pages/{slug}.html'
+PAGE_SAVE_AS = 'pages/{slug}.html'
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
