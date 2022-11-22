@@ -9,8 +9,7 @@ THEME = "./customized"
 
 DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'archives'))
 TIMEZONE = 'America/New_York'
-PAGE_PATHS=['pages']
-PAGE_URL =
+
 DEFAULT_LANG = 'en'
 USE_FOLDER_AS_CATEGORY=True
 # Feed generation is usually not desired when developing
