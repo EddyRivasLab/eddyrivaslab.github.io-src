@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 
-{% set title = page.title | striptags | escape %}
-{% set url = SITEURL + '/' + page.url %}
-
-{% block canonical_rel %}
-    <link rel="canonical" href="{{ url }}">
-{% endblock %}
-
-{% block title %}{{ title }} | {{ SITENAME }}{% endblock title %}
 blorg blorg blorg blorg
 {% block content %}
-        <article>
-
-        {{ page.content }}
-
-        </article>
+     
 {% endblock %}
