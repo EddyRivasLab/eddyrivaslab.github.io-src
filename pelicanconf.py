@@ -30,3 +30,12 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+# custom Jinja2 filter
+def hidden_pages_get_page_with_slug_index(hidden_pages):
+    for page in hidden_pages:
+        if page.slug == "index":
+            return page
+
+JINJA_FILTERS = {
+    "hidden_pages_get_page_with_slug_index": hidden_pages_get_page_with_slug_index,
+}
