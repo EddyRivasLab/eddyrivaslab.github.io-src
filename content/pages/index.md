@@ -2,8 +2,7 @@ Title: Welcome
 Date: 11/21/22
 Authors: Nick Carter
 category: main
-url: index.html
-save_as: index.html
+
 status: hidden
 slug:index
 
