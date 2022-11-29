@@ -54,7 +54,20 @@
             background-color: white;
         }
     </style>
+    <style>
+      div.container {
+        width: 60%
+        border: none
+        margin:auto
+      }
 
+      artlist{
+        float: left
+      }
+      article{
+        padding: 1em
+      }
+    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -88,15 +101,28 @@
             </nav>
         </header>
 
-        <div class="main-content"><p>This website is a repository of tips and HOWTOs assembled by the members of the Eddy and Rivas Labs at Harvard.  It is not a good place to find documentation on our labs' software packages.  For that, please see the documentation PDFs and man pages that are included with each package.</p>
+
+        <body>
+          <div class="container">
+            <artlist>
+              <li><a href="#">Selection 1</a></li>
+              <li><a href="#">Selection 2</a></li>
+              <li><a href="#">Selection 3</a></li>
+            </artlist>
+      
+  
+            <article>
+              <p>This website is a repository of tips and HOWTOs assembled by the members of the Eddy and Rivas Labs at Harvard.  It is not a good place to find documentation on our labs' software packages.  For that, please see the documentation PDFs and man pages that are included with each package.</p>
 <p>change here stuff again stuff
 and more testing and more and still more
 Working now?</p>
-<p>blah</p></div>
+<p>blah</p>
+            </article>
+          </div>
+        </body>
 
 
-
-        <footer>Grumpily Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
+        <footer>Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
     </div>
     </body>
 </html>
