@@ -106,9 +106,13 @@
               {{ index.content }}
 
               <h2>Available HOWTOs</h2>
+              <ul>
               {% for pg in pages %}
-                <a href="{{SITEURL}}/{{pg.url}}">{{pg.title}}</a>
+                {% if pages.category != "author"%}
+                  <li><a href="{{SITEURL}}/{{pg.url}}">{{pg.title}}</a></li>
+                {% endif %}
               {% endfor %}
+              </ul>
         </body>
 
 
