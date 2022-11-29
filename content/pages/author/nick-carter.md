@@ -1,5 +1,5 @@
 Title: Nick Carter
-Date: 11/21/22
+Date: 11/28/22
 Authors: Nick Carter
 category: author
 slug:nick-carter

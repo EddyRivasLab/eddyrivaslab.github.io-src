@@ -7,7 +7,6 @@ Our high performance cluster computing is managed by
 [Harvard Research Computing](https://www.rc.fas.harvard.edu/) (RC).
 
 
-
 ## Overview 
 
 Your RC _home directory_ is something like `/n/home01/<username>`.
