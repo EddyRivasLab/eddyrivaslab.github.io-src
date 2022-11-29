@@ -108,7 +108,7 @@
               <h2>Available HOWTOs</h2>
               <ul>
               {% for pg in pages %}
-                {% if pages.category != "author"%}
+                {% if pg.category != "author"%}
                   <li><a href="{{SITEURL}}/{{pg.url}}">{{pg.title}}</a></li>
                 {% endif %}
               {% endfor %}
