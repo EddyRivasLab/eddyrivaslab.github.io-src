@@ -101,6 +101,11 @@
             </nav>
         </header>
         {% block content %}
+        <article>
+
+          {{ page.content }}
+  
+          </article>
         {% endblock %}
         <footer>Grumpily Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
         {% block final_script %}{% endblock %}
