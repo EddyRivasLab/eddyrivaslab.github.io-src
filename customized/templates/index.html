@@ -106,8 +106,8 @@
               {{ index.content }}
 
               <h2>Available HOWTOs</h2>
-              {% for page in pages %}
-                <a href="{{SITEURL}}/{{article.url}}">{{article.title}}</a>
+              {% for pg in pages %}
+                <a href="{{SITEURL}}/{{pg.url}}">{{pg.title}}</a>
               {% endfor %}
         </body>
 
