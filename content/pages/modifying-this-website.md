@@ -18,6 +18,8 @@ If you want to work on your laptop or other local machine, you'll have to set up
 
 5. _Clone the source repository_: Run "git clone git@github.com:EddyRivasLab/eddyrivaslab.github.io-src.git" to clone a copy of the source repository into your local filesystem.  You do not need to clone the eddyrivaslab.github.io repository: all work on that repository is done automatically when you run a "git commit" operation.
 
+6. _Set up the commit hook_: We use a technique called a commit hook to automate the process of converting markdown files into web pages and pushing those web pages to the right place so that they'll show up on our web site.  Unfortunately, this commit hook is not created automatically when you clone the repository.  To set it up, you need to run "cp post-commit .git/hooks/" in the top level of the repository.  Once that's done, you should check that you have execute permissions on .git/hooks/post-commit.
+
 ##Modifying the Site
 Once you've done the first-time setup, making changes to this website is fairly simple:
 
@@ -31,4 +33,8 @@ To create a new guide, copy the "template.md" file from the top-level directory 
 
 After you've modified the Pelican lines, go ahead and write your page in Markdown.  One note: the template we use to format our website will insert a title containing the value in the "Title:" field at the top of your page, so there's no need to put a top-level title in the markdown file.
 
-3. _Commit and Push_: 
+3. _Commit and Push_: Once you're happy with your changes, cd to the top level of your git repository and run 'git commit -a -m "\<description of your changes\>"'. This will call Pelican to create HTML pages from the markdown source and will push those changes to the eddyrivaslab.github.io repository that contains the actual web page.  You may see a warning of the form "Local could not be set ...".  This can be ignored, as we explicitly set the locale of the web site in pelicanconf.py
+
+The git commit command will take a while to run, and then it will take 
+
+Finally, run "git push" to push your changes to the eddyrivaslab.github.io-src repository back up to Github so that other people will see them.
