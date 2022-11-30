@@ -24,4 +24,4 @@ It's common in our lab for someone to want to run hundreds or thousands of jobs,
 
 3. Limit the number of long-running (more than 1-2 hours) jobs you run at the same time.  Some of the jobs we run take days or weeks to complete, and filling up our resources with those jobs can lock others out of the cluster for long periods of time.  If you expect your jobs to run for more than 1-2 hours each, use either a job array's limit on the number of sub-jobs that can run simultaneously or the --exclude option to srun/sbatch to ensure that you aren't running more than 200 such jobs at a time.
 
-4. Make sure that your jobs only use the number of 
+4. Make sure that your jobs only use the number of cores you've requested from Slurm.  Most parallel programs have an option to specify the number of cores/CPUs they use, but the syntax of this varies from program to program.
