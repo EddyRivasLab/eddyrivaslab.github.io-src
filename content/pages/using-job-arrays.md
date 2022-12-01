@@ -20,7 +20,9 @@ Within an sbatch script that specifies a job array, Slurm defines two variables:
 Slurm defines a SLURM_ARRAY_TASK_ID environment variable for each sub-job in an array, which will have the same value as the %a variable in the sbatch script.  If each sub-job is itself a shell script, you can access this environment variable with $SLURM_ARRAY_TASK_ID.  If your sub-jobs are Python scripts, the lines "import sys" followed by Jobid = sys.getenv\(‘SLURM_ARRAY_TASK_ID’\) will get the value of the environment variable.  In R, "Task_id <- Sys.getenv\(“SLURM_ARRAY_TASK_ID”\)" will fetch the variable's value.
 
 ###Using array ID's to select input files from directories
-It's common in our lab for someone to have a directory of input files that they want to run the same program on, but there's often no obvious way to map job IDs to different files in a directory.  The [University of Florida's Research Computing](https://help.rc.ufl.edu/doc/SLURM_Job_Arrays) documentation on job arrays provides a way to do this.  In an sbatch file, the line "file=\$\(ls /path/to/directory/* | sed -n \$\{SLURM_ARRAY_TASK_ID\}p\)" 
+It's common in our lab for someone to have a directory of input files that they want to run the same program on, but there's often no obvious way to map job IDs to different files in a directory.  The [University of Florida's Research Computing's documentation on job arrays](https://help.rc.ufl.edu/doc/SLURM_Job_Arrays)  provides a way to do this.  In an sbatch file, the line "file=$(ls /path/to/directory/* | sed -n ${SLURM_ARRAY_TASK_ID}p)" will set the "file" variable to the name of the Nth file in the directory, where N is the sub-job's task ID.  You can then pass that as the input to a program with a command like "hmmsearch $file database.fasta".
 
+###A complete example
+An example sbatch script that illustrates the use of job arrays can be found at /n/eddy_lab/software/scripts/array_directory_sbatch_example.sh on the RC cluster.
 
 
