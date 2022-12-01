@@ -1,4 +1,4 @@
-Title: Cluster computing in the Eddy and Rivas Labs
+Title: Eddy and Rivas Lab Cluster Resources and how to Access Them
 Date: 11/16/22
 slug:cluster-computing-in-the-eddy-and-rivas-labs
 Authors: Sean Eddy

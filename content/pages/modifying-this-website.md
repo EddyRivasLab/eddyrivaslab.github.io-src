@@ -6,6 +6,19 @@ slug: modifying-this-website
 This website is built using [Github Pages](https://pages.github.com/) and  [Pelican](https://getpelican.com/), a tool that converts documents written in Markdown into HTML websites.  All of the complexity of running Pelican and getting the resulting web pages into the right place for Github to serve them as a website has been automated, so after some first-time setup, making changes only requires a Git checkout-commit-push cycle.
 
 ##First time Setup
+1. _Get access to the Github repositories_: Ask Sean to give you write (push) access to the eddyrivaslab.github.io and eddyrivaslab.github.io-src repositories on the EddyRivasLab Github project.  This will require that you create an account on www.github.com and give Sean your account name so that he can give you the permissions you need.
+
+2. _Set up your work environment_:
+The simplest way to contribute to this site is to do your work on the RC cluster, where all of the required Pelican and Python packages have already been installed. To do that, add the lines "export PATH=\$PATH:/n/eddy_lab/software/bin" and 
+"export PYTHONPATH=\$PYTHONPATH:/n/eddy_lab/software/python-packages" to the .bashrc file in your home directory. <span class="marginnote">If you've used the export HOME=/n/eddy_lab?users/username trick to make it look like your directory in our lab disk space is your home directory, you'll need to find your actual /n/homeXX/username home directory and make the changes to the .bashrc file in that directory.</span> After you've done that, log out of the cluster and back in again, and everything should be set up for you to use Pelican and our other local software installs.
+
+If you want to work on your laptop or other local machine, you'll have to set up Python on that machine and then install Pelican from getpelican.com.  You'll then have to install the pelican-render-math, beautifulsoup4, and webassets Python packages using pip. 
+
+4. _Set up a Github SSH key_:  If you haven't already done so, follow the instructions at "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account" to add an SSH key to your Github account.  This will allow the different git push operations required to modify the website to run without you having to enter username/password information.
+
+5. _Clone the source repository_: Run "git clone --recurse-submodules git@github.com:EddyRivasLab/eddyrivaslab.github.io-src.git" to clone a copy of the source repository into your local filesystem.  The "--recurse-submodules" option is mandatory, in order to pick up some of the themes and plugins our site depends on. You do not need to clone the eddyrivaslab.github.io repository: all work on that repository is done automatically when you run a "git commit" operation.
+
+6. _Set up the commit hook_: We use a technique called a commit hook to automate the process of converting markdown files into web pages and pushing those web pages to the right place so that they'll show up on our web site.  Unfortunately, this commit hook is not created automatically when you clone the repository.  To set it up, you need to run "cp post-commit .git/hooks/" in the top level of the repository.  Once that's done, you should check that you have execute permissions on .git/hooks/post-commit.
 1. _Get access to the Github repositories_:  
 Ask Sean to give you write (push) access to the eddyrivaslab.github.io and eddyrivaslab.github.io-src repositories on the EddyRivasLab Github project.  This will require that you create an account on www.github.com and give Sean your account name so that he can give you the permissions you need.  
 2. _Set up your work environment_:  
