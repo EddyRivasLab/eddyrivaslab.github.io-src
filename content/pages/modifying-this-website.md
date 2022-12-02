@@ -45,3 +45,4 @@ One exception to this is the &dollar; symbol.  This is a special case where the 
 Markdown will pass through HTML control sequences without changing them, so you can insert HTML commands in your document and they'll be copied into the HTML pages that Markdown creates.  This can allow you to do some things that can't be done with Markdown alone. <span class="marginnote">For example, to add a margin note like this one, you can use the &lt;span class="marginnote"gt; I'm a marginnote &lt;/span&gt; syntax.</span>
 
 ###Equations
+Our Pelican setup can parse and render LaTeX math syntax.  To mark an equation as LaTeX math, put two dollar signs before and after the equation.  For example, the string &dollar;&dollar;\frac{1}{2})&dollar;&dollar; would generate the output $$\frac{1}{2}$$.
