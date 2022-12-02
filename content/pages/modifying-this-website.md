@@ -33,3 +33,10 @@ After you've modified the Pelican lines, go ahead and write your page in Markdow
 Once you're happy with your changes, cd to the top level of your git repository and run 'git commit -a -m "<description of your changes>"'. This will call Pelican to create HTML pages from the markdown source and will push those changes to the eddyrivaslab.github.io repository that contains the actual web page.  You may see a warning of the form "Locale could not be set ...".  This can be ignored, as we explicitly set the locale of the web site in pelicanconf.py.  
 The git commit command will take a while to run, and then it will take Github a while to make the changes visible on https://eddyrivaslab.github.io.  If your changes haven't appeared after 5 minutes or so, you may need to clear your browser's cache and re-load the web page.  Iterate this modify-commit cycle until you're happy with your changes.  
 Finally, run "git push" to push your changes to the eddyrivaslab.github.io-src repository back up to Github so that they won't get lost when other people make changes to the site.  
+
+##Tips and tricks
+Markdown is intended to be a very "lightweight" way of formatting documents, but it has some idiosyncracies.  One is the way it handles paragraph breaks.  To put a paragraph break in your document, you need to add two spaces after the end of the first paragraph, and then hit return/enter.  Otherwise, Markdown will ignore the end-of-line in your source document and merge the two paragraphs into one big one.  
+Alternately, you can leave a blank line between paragraphs, but this causes Markdown to leave blank space between the paragraphs.  
+###Escaping Markdown markup characters
+Markdown uses symbols such as '\#' and '\_' to control how a document is formatted.  If you want the symbol to appear in your guide, you need to "escape" it by putting a backslash before the symbol, which tells Markdown not to treat the character as a command.  
+One exception to this is the &dollar; symbol.  This is a special case where the normal escaping process doesn't work.  Instead, you need to use the HTML escape sequence &amp;dollar; to insert a dollar sign.
