@@ -40,3 +40,6 @@ Alternately, you can leave a blank line between paragraphs, but this causes Mark
 ###Escaping Markdown markup characters
 Markdown uses symbols such as '\#' and '\_' to control how a document is formatted.  If you want the symbol to appear in your guide, you need to "escape" it by putting a backslash before the symbol, which tells Markdown not to treat the character as a command.  
 One exception to this is the &dollar; symbol.  This is a special case where the normal escaping process doesn't work.  Instead, you need to use the HTML escape sequence &amp;dollar; to insert a dollar sign.
+
+###Including HTML
+Markdown will pass through HTML control sequences without changing them, so you can insert HTML commands in your document and they'll be copied into the HTML pages that Markdown creates.  This can allow you to do some things that can't be done with Markdown alone. <span class="marginnote">For example, to add a margin note like this one, you can use the $lt;span class="marginnote"$gt; I'm a marginnote $lt;/span$gt; syntax.</span>
