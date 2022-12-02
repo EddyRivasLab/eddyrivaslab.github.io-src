@@ -95,11 +95,14 @@
 <h2>Step 1: Check the state of the machines in the partition</h2>
 <p>The command 'sinfo -p <em>partitionname</em>' will generate a table showing the overall state of the machines in the partition.  The two most relevant fields in the table are the "AVAIL" and "STATE" fields.  "AVAIL" should always have the value "up".  If it doesn't, something has gone badly wrong; contact RC to get it looked at.<br>
 The "STATE" field can have multiple values.  Each line in the table will have a different value in the "STATE" field, and the "NODELIST" field will list the machines in the partition that have that state.  The values you're likely to see in the "STATE" field are:<br>
-<em>"alloc"<br>
-Machines in the "alloc" state are fully-occupied with jobs from our group.  If there are jobs waiting for the partition, all of the machines should be in this state.<br>
-</em>"mix"<br>
-Machines in the "mix" state are some combination of idle, running our jobs, and running jobs from one of the "requeue" partition.  This state generally indicates that the machine(s) are healthy, and that there isn't enough work from our group to keep them full.  If machines stay in the "mix" state for a long time (more than 30 minutes) while our jobs are waiting, it may indicate a problem.<br>
-*"up"  </p>
+<em>alloc: Machines in the "alloc" state are fully-occupied with jobs from our group.  If there are jobs waiting for the partition, all of the machines should be in this state.<br>
+</em>mix: Machines in the "mix" state are some combination of idle, running our jobs, and running jobs from one of the "requeue" partition.  This state generally indicates that the machine(s) are healthy, and that there isn't enough work from our group to keep them full.  If machines stay in the "mix" state for a long time (more than 30 minutes) while our jobs are waiting, it may indicate a problem.<br>
+<em>up: This indicates that Slurm thinks the machine(s) are operating correctly, but has no work to assign no them.  In practice, you're unlikely to see this state except during winter break, because there's almost always work in the requeue partition to be done.  If you see this state while there are jobs waiting to be run, something's gone wrong; contact RC to get it looked at.<br>
+</em>down: Machines in this state are unavailable to run jobs; contact RC to get the issue looked into.<br>
+<em>drain: This state indicates that Slurm is killing jobs from one of the requeue partitions to make room for jobs from our group.  This is the correct behavior as long as machines don't get stuck in this state for more than 30 minutes, in which case it may indicate a problem.  You should investigate further and contact RC if there is a problem.<br>
+</em>drng: Machines in this state are overloaded with work, so Slurm is not scheduling further jobs until the load on them decreases.  This is generally a problem, most often caused by someone running jobs that start more threads/use more cores than they requested from Slurm.  If you see this, investigate further to figure out which user is causing the problem.  If they're from our group, contact them.  If the problematic jobs are from a requeue partition, contact RC and they'll deal with it.</p>
+<h2>Step 2: Check the queue</h2>
+<p>'squeue -p <em>partitionname</em>  </p>
 
         </article>
         <footer>Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
