@@ -46,3 +46,6 @@ Markdown will pass through HTML control sequences without changing them, so you 
 
 ###Equations
 Our Pelican setup can parse and render LaTeX math syntax.  To mark an equation as LaTeX math, put two dollar signs before and after the equation.  For example, the string &dollar;&dollar;\frac{1}{2})&dollar;&dollar; would generate the output $$\frac{1}{2}$$.
+
+###Adding pictures/images
+Pictures and images should be placed in the content/images directory.  Don't forget to "git add" your image files.  I haven't figured out how to get image linking to work in Pelican yet, please let me (Nick) know if you figure it out.
