@@ -45,7 +45,7 @@ One exception to this is the &dollar; symbol.  This is a special case where the 
 Markdown will pass through HTML control sequences without changing them, so you can insert HTML commands in your document and they'll be copied into the HTML pages that Markdown creates.  This can allow you to do some things that can't be done with Markdown alone. <span class="marginnote">For example, to add a margin note like this one, you can use the &lt;span class="marginnote"gt; I'm a marginnote &lt;/span&gt; syntax.</span>
 
 ###Equations
-Our Pelican setup can parse and render LaTeX math syntax.  Wrapping a LaTeX math command in dollar signs will tell Markdown to treat it as an in-line equation.  For example, the string '$\frac{1}{2}$' would generate the output $\frac{1}{2}$. Putting two dolar signs on either side of an equation will cause Pelican to render it as a separate math block, e.g. '$$\frac{1}{2}$$ will produce $$\frac{1}{2}$$'.
+Our Pelican setup can parse and render LaTeX math syntax.  Wrapping a LaTeX math command in dollar signs will tell Markdown to treat it as an in-line equation.  For example, the string <span class="tex2jax_ignore">$\frac{1}{2}$</span> would generate the output $\frac{1}{2}$. Putting two dolar signs on either side of an equation will cause Pelican to render it as a separate math block, e.g. <span class="tex2jax_ignore">$$\frac{1}{2}$$</span> will produce $$\frac{1}{2}$$.
 
 ###Adding pictures/images
 Pictures and images should be placed in the content/images directory.  Don't forget to "git add" your image files.  I haven't figured out how to get image linking to work in Pelican yet, please let me (Nick) know if you figure it out.
