@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="A cast of tens">
 
-    <title>Eddy and Rivas Labs Resource Page</title>
+    <title>My Jobs Aren&#39;t Running | Eddy and Rivas Labs Resource Page</title>
 
+    <link rel="canonical" href="https://eddyrivaslab.github.io/pages/my-jobs-arent-running.html">
 
     <link href="/theme/css/tufte.css" rel="stylesheet">
     <link href="/theme/css/latex.css" rel="stylesheet">
@@ -87,22 +88,20 @@
             <nav class="bottom-group">
             </nav>
         </header>
+        <article>
+        <h1>My Jobs Aren't Running</h1>
 
+        <p>It's (sadly) fairly common for our RC machines to get into states where they aren't able to start new jobs.  Here are some ways to figure out what's going on if your jobs seem to be stuck in the queue</p>
+<h2>Step 1: Check the state of the machines in the partition</h2>
+<p>The command 'sinfo -p <em>partitionname</em>' will generate a table showing the overall state of the machines in the partition.  The two most relevant fields in the table are the "AVAIL" and "STATE" fields.  "AVAIL" should always have the value "up".  If it doesn't, something has gone badly wrong; contact RC to get it looked at.<br>
+The "STATE" field can have multiple values.  Each line in the table will have a different value in the "STATE" field, and the "NODELIST" field will list the machines in the partition that have that state.  The values you're likely to see in the "STATE" field are:<br>
+<em>"alloc"<br>
+Machines in the "alloc" state are fully-occupied with jobs from our group.  If there are jobs waiting for the partition, all of the machines should be in this state.<br>
+</em>"mix"<br>
+Machines in the "mix" state are some combination of idle, running our jobs, and running jobs from one of the "requeue" partition.  This state generally indicates that the machine(s) are healthy, and that there isn't enough work from our group to keep them full.  If machines stay in the "mix" state for a long time (more than 30 minutes) while our jobs are waiting, it may indicate a problem.<br>
+*"up"  </p>
 
-        <body>
-
-              <p>This website is a repository of tips and HOWTOs assembled by the members of the Eddy and Rivas Labs at Harvard.  It is not a good place to find documentation on our labs' software packages.  For that, please see the documentation PDFs and man pages that are included with each package.</p>
-
-              <h2>Available HOWTOs</h2>
-              <ul>
-                  <li><a href="https://eddyrivaslab.github.io/pages/cluster-computing-in-the-eddy-and-rivas-labs.html">Cluster computing in the Eddy and Rivas Labs</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/modifying-this-website.html">Modifying This Website</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/my-jobs-arent-running.html">My Jobs Aren't Running</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/running-jobs-on-our-cluster.html">Running Jobs on Our RC Machines</a></li>
-              </ul>
-        </body>
-
-
+        </article>
         <footer>Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
     </div>
     </body>
