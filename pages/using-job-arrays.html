@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="A cast of tens">
 
-    <title>Eddy and Rivas Labs Resource Page</title>
+    <title>Using Job Arrays | Eddy and Rivas Labs Resource Page</title>
 
+    <link rel="canonical" href="https://eddyrivaslab.github.io/pages/using-job-arrays.html">
 
     <link href="/theme/css/tufte.css" rel="stylesheet">
     <link href="/theme/css/latex.css" rel="stylesheet">
@@ -87,23 +88,26 @@
             <nav class="bottom-group">
             </nav>
         </header>
+        <article>
+        <h1>Using Job Arrays</h1>
 
+        <p>Slurm job arrays are the preferred way to run large numbers of jobs on the RC cluster because Slurm's scheduler sees a job array as a single item when deciding what job to run next.  That makes job arrays a convenient way to submit large numbers of jobs<span class="marginnote">Up to 10,000 on the RC cluster.</span> to the scheduling queue without filling up the 1,500-task window that Slurm examines when selecting the next job to run and blocking other users' jobs from running.</p>
+<h2>Submitting a job array</h2>
+<p>Slurm uses the syntax "--array=range", where "range" specifies the IDs of the sub-jobs within the array, to indicate that a job array is being submitted.  This can either be passed as an option to srun or as one of the lines in an sbatch script: "#SBATCH --array=range".<br>
+The range of a job array can either be specified by its start and end IDs, e.g. "--array=1-1000" or as a list of IDs such as "--array=1,3,5,7".  You can also specify a stride in the range, so "--array=1-1001:2" would create an array of 500 sub-jobs whose IDs are the odd numbers from 1 to 1001.</p>
+<h3>Limiting the number of sub-jobs that run simultaneously</h3>
+<p>Adding "%joblimit" to the end of an array specification will limit the number of sub-jobs from the array that Slurm will run at one time, so the specification "--array=1-10000:100" creates an array of 10,000 jobs but tels Slurm to run at most 100 of them at a time.   Use of this option is very strongly recommended if the sub-jobs within your array take more than an hour or two to run to avoid locking others out of the cluster.</p>
+<h2>Using job IDs</h2>
+<p>Slurm assigns each sub-job within an array a numeric ID that is its position within the range specified for the array.  When running a job array, you need to use these IDs to make each sub-job do something different, or you'll wind up running many copies of the same job.<br>
+Within an sbatch script that specifies a job array, Slurm defines two variables: %A contains Slurm's ID for the entire job array, and %a contains the ID of the sub-job within the array.  One use for these variables is to create distinct output and error files for each sub-job.  For example, putting the lines "#SBATCH -o hmmer_test.%A.%a.out" and "#SBATCH -e hmmer_test.%A.%a.err" in an sbatch script will create unique output and error files for each sub-job in the script even if the script is run many times, unless the Slurm job IDs roll over and repeat themselves, which happens infrequently on the RC cluster.  </p>
+<h3>Accessing job IDs within a sub-job</h3>
+<p>Slurm defines a SLURM_ARRAY_TASK_ID environment variable for each sub-job in an array, which will have the same value as the %a variable in the sbatch script.  If each sub-job is itself a shell script, you can access this environment variable with $SLURM_ARRAY_TASK_ID.  If your sub-jobs are Python scripts, the lines "import sys" followed by "Jobid = sys.getenv(‘SLURM_ARRAY_TASK_ID’)" will get the value of the environment variable.  In R, "Task_id &lt;- Sys.getenv(“SLURM_ARRAY_TASK_ID”)" will fetch the variable's value.</p>
+<h3>Using array ID's to select input files from directories</h3>
+<p>It's common in our lab for someone to have a directory of input files that they want to run the same program on, but there's often no obvious way to map job IDs to different files in a directory.  The <a href="https://help.rc.ufl.edu/doc/SLURM_Job_Arrays">University of Florida's Research Computing's documentation on job arrays</a>  provides a way to do this.  In an sbatch file, the line "file=$(ls /path/to/directory/* | sed -n ${SLURM_ARRAY_TASK_ID}p)" will set the "file" variable to the name of the Nth file in the directory, where N is the sub-job's task ID.  You can then pass that as the input to a program with a command like "hmmsearch $file database.fasta".</p>
+<h3>A complete example</h3>
+<p>An example sbatch script that illustrates the use of job arrays can be found at /n/eddy_lab/software/scripts/array_directory_sbatch_example.sh on the RC cluster.</p>
 
-        <body>
-
-              <p>This website is a repository of tips and HOWTOs assembled by the members of the Eddy and Rivas Labs at Harvard.  It is not a good place to find documentation on our labs' software packages.  For that, please see the documentation PDFs and man pages that are included with each package.</p>
-
-              <h2>Available HOWTOs</h2>
-              <ul>
-                  <li><a href="https://eddyrivaslab.github.io/pages/cluster-computing-in-the-eddy-and-rivas-labs.html">Eddy and Rivas Lab Cluster Resources and how to Access Them</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/modifying-this-website.html">Modifying This Website</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/my-jobs-arent-running.html">My Jobs Aren't Running</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/running-jobs-on-our-cluster.html">Running Jobs on Our RC Machines</a></li>
-                  <li><a href="https://eddyrivaslab.github.io/pages/using-job-arrays.html">Using Job Arrays</a></li>
-              </ul>
-        </body>
-
-
+        </article>
         <footer>Powered by <a href="https://getpelican.com/">Pelican</a>.  Site theme is a modified version of <a href="https://github.com/andrewheiss/ath-tufte-pelican">ath-tufte-pelican</a>.</footer>
     </div>
     </body>
