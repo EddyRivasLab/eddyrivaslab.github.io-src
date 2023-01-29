@@ -39,13 +39,22 @@ is automatically deleted after 90 days.
 You can read
 [more documentation on how RC storage works](https://docs.rc.fas.harvard.edu/kb/cluster-storage/).
 
-We have three compute partitions dedicated to our lab (the `-p`, for
+We have two compute partitions dedicated to our lab (the `-p`, for
 partition, will make sense when you learn how to launch compute jobs
 with the `slurm` scheduler):
 
-* **-p eddy:** 640 cores, 16 nodes (40 cores/node). We use this partition for most of
-  our computing.
+* **-p eddy:** 2716 cores, from three generations of cluster
+  acquisition:
+  
+  - 15x36 (540 cores), [holy2c02101-06,08-16]; circa 2016
+  - 16x40 (640 cores), [holy2c14201-16]; circa 2018
+  - 24x64 (1536 cores), [holy8a2*]; circa 2023
 
+  Our 2016 gen1 cores aren't all that much slower than the 2023 gen3
+  cores, so we just have everything lumped together. We'll keep
+  running the old cores until they die in harness. (1 of our 16 gen1
+  nodes already did.)
+  
 * **-p eddy_gpu:** 
   4 GPU nodes [holyb0909,holyb0910,holygpu2c0923,holygpu2c1121].
   Each holyb node has 4 [NVIDIA Tesla V100 NVLINK GPUs](https://www.nvidia.com/en-us/data-center/v100/)
@@ -58,15 +67,8 @@ with the `slurm` scheduler):
   
   We use this partition for GPU-enabled machine learning stuff, TensorFlow and the like.
   
-* **-p eddy_hmmer:** 576 cores in 16 nodes. These are older cores
-  (circa 2016). We use this partition for long-running or large jobs, to
-  keep them from getting in people's way on `-p eddy`.
-
-We are awaiting installation of another 1536 CPU cores (in 24 nodes,
-64 cores/node) [expected fall 2022].
-
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
-shared` is 17,952 cores (in 375 nodes), for example. RC has
+shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has
 [much more documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).
 
 
