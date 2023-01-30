@@ -53,7 +53,7 @@ with the `slurm` scheduler):
   Our 2016 gen1 cores aren't all that much slower than the 2023 gen3
   cores, so we just have everything lumped together. We'll keep
   running the old cores until they die in harness. (1 of our 16 gen1
-  nodes already has.)
+  nodes already did.)
   
 * **-p eddy_gpu:** 
   4 GPU nodes [holyb0909,holyb0910,holygpu2c0923,holygpu2c1121].
