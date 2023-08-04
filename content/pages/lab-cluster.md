@@ -56,17 +56,19 @@ with the `slurm` scheduler):
   nodes already have.)
   
 * **-p eddy_gpu:** 
-  We use this partition for GPU-enabled machine learning stuff, TensorFlow and the like.
-  We have 5 GPU nodes: holyb0909,holyb0910,holygpu2c0923,holygpu2c1121,holygpu7c0920.
+  We use this partition for GPU-enabled machine learning stuff,
+  TensorFlow and the like.  
+  We have 5 GPU nodes:
+  holyb0909,holyb0910,holygpu2c0923,holygpu2c1121,holygpu7c0920.  
 
   Each holyb node has 4 [NVIDIA Tesla V100 NVLINK GPUs](https://www.nvidia.com/en-us/data-center/v100/)
-  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].
+  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].  
 
   Each holygpu2c node has 8 [NVIDIA Ampere A40 GPUs](https://www.nvidia.com/en-us/data-center/a40/)
-  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].
+  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].  
   
   The holygpu7 node has 4 [NVIDIA HGX A100 GPUs](https://www.nvidia.com/en-us/data-center/hgx/)
-  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [installed 2023].
+  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [installed 2023].  
   
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
 shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has
