@@ -42,5 +42,5 @@ successor) to be re-installed. Turn in any notebooks to Ariane as well
 so that they can be scanned to satisfy Harvard's research retention
 rules.
 
-7. Enjoy the rest of your life, and come back to visit us!
+7. Enjoy the rest of your life, and come back to visit!
 
