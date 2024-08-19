@@ -43,29 +43,32 @@ We have two compute partitions dedicated to our lab (the `-p`, for
 partition, will make sense when you learn how to launch compute jobs
 with the `slurm` scheduler):
 
-* **-p eddy:** 2716 cores, from three generations of cluster
+* **-p eddy:** 2680 cores, from three generations of cluster
   acquisition:
   
-  - 15x36 (540 cores), [holy2c02101-06,08-16]; circa 2016
+  - 14x36 (504 cores), [holy2c02101-06,08-10,12-16]; circa 2016
   - 16x40 (640 cores), [holy2c14201-16]; circa 2018
   - 24x64 (1536 cores), [holy8a2*]; circa 2023
 
   Our 2016 gen1 cores aren't all that much slower than the 2023 gen3
   cores, so we just have everything lumped together. We'll keep
-  running the old cores until they die in harness. (1 of our 16 gen1
-  nodes already did.)
+  running the old cores until they die in harness. (2 of our 16 gen1
+  nodes already have.)
   
 * **-p eddy_gpu:** 
-  4 GPU nodes [holyb0909,holyb0910,holygpu2c0923,holygpu2c1121].
-  Each holyb node has 4 [NVIDIA Tesla V100 NVLINK GPUs](https://www.nvidia.com/en-us/data-center/v100/)
-  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].
-  Each holygpu2c node has 8 [NVIDIA Ampere A40 GPUs](https://www.nvidia.com/en-us/data-center/a40/)
-  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].
+  We use this partition for GPU-enabled machine learning stuff,
+  TensorFlow and the like.  
+  We have 5 GPU nodes:
+  holyb0909,holyb0910,holygpu2c0923,holygpu2c1121,holygpu7c0920.  
 
-  We are awaiting one more GPU node with 4 [NVIDIA HGX A100 GPUs](https://www.nvidia.com/en-us/data-center/hgx/)
-  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [shipping expected Nov 2022].
+  Each holyb node has 4 [NVIDIA Tesla V100 NVLINK GPUs](https://www.nvidia.com/en-us/data-center/v100/)
+  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].  
+
+  Each holygpu2c node has 8 [NVIDIA Ampere A40 GPUs](https://www.nvidia.com/en-us/data-center/a40/)
+  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].  
   
-  We use this partition for GPU-enabled machine learning stuff, TensorFlow and the like.
+  The holygpu7 node has 4 [NVIDIA HGX A100 GPUs](https://www.nvidia.com/en-us/data-center/hgx/)
+  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [installed 2023].  
   
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
 shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has
@@ -131,9 +134,9 @@ You still have to authenticate by password and OpenAuth code, though.
 	
 ### configuring single sign-on scp access
 
-It can get tedious to have to authenticate every time you `ssh` to RC,
-especially if you're using ssh-based tools like `scp` to copy
-individual files back and forth.  You can streamline this using
+Even better, but a little more complicated: you can make it so you
+only have to authenticate once, and every ssh or scp after that is
+passwordless. To do this, I use
 [SSH ControlMaster for single sign-on](https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/),
 to open a single `ssh` connection that you authenticate once, and all
 subsequent `ssh`-based traffic to RC goes via that connection.
@@ -142,11 +145,11 @@ RC's
 [instructions are here](https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/)
 but briefly:
 
-* Add another hostname alias to your `.ssh/config` file. Mine is
-  called **odx**:
+* Replace the above hostname alias in `.ssh/config` file with
+  something like this:
   
 ```bash
-Host              odx
+Host              ody
    User           seddy
    HostName       login.rc.fas.harvard.edu
    ControlMaster  auto
@@ -157,15 +160,15 @@ Host              odx
 * Add some aliases to your `.bashrc` file:
 
 ```bash
-   alias odx-start='ssh -Y -o ServerAliveInterval=30 -fN odx'   
-   alias odx-stop='ssh -O stop odx'
-   alias odx-kill='ssh -O exit odx'
+   alias ody-start='ssh -Y -o ServerAliveInterval=30 -fN ody'   
+   alias ody-stop='ssh -O stop ody'
+   alias ody-kill='ssh -O exit ody'
 ```
 
 Now you can launch a session with:
 
 ```
-    % odx-start
+    % ody-start
 ```
 
 It'll ask you to authenticate. After you do this, all your ssh-based
@@ -173,7 +176,7 @@ commands (in any terminal window) will work without further
 authentication. To stop the connection, do
 
 ```
-    % odx-stop
+    % ody-stop
 ```
 
 If you forget to stop it, no big deal, the connection will eventually
