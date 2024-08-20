@@ -1,4 +1,4 @@
-Title: Using Job Arrays
+Title: Leaving the Lab
 Date: 8/19/2024
 Authors: Nick Carter
 slug: leaving-the-lab
