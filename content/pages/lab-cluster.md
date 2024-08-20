@@ -14,7 +14,7 @@ When you log in, that's where you'll land. You have 100GB of space
 here. 
 
 Our _lab storage_ is `/n/eddy_lab/`. We have 400TB of what RC calls
-Tier 1 storage. 
+Tier 1 storage, which is fast but expensive. 
 
 Both your home directory and our lab storage are backed up nightly to
 what RC calls _snapshots_, and periodically to what RC calls _disaster
@@ -28,47 +28,20 @@ machine using `samba`. (Warning: a samba mount is slow, and may
 sometimes be flaky; don't rely on it except for lightweight tasks.)
 Instructions are below.
 
-RC also provides _shared scratch storage_ for us in
-`/n/holyscratch01/eddy_lab`. You have write access here, so at any
-time you can create your own temp directory(s). Best practice is to
-use a directory of your own, in
-`/n/holyscratch01/eddy_lab/Users/<username>`. We have a 50TB
-allocation. This space can't be remote mounted, isn't backed up, and
-is automatically deleted after 90 days.
+RC also provides _shared scratch storage_, which is very fast but not backed up.  Files on the scratch storage that are older than 90 days are automatically deleted, and RC strongly frowns on playing tricks to make files look younger than they are.  Because RC occasionally moves the scratch storage to different devices, the easiest way to access it is through the $SCRATCH variable, which is defined on all RC machines.  Our lab has an eddy_lab directory on the scratch space with a 50TB quota, which contains a Users directory, so '$SCRATCH/eddy_lab/Users/<yourusername>' will point to your directory on the scratch space <span class="marginnote">The Users directory was pre-populated with space for a set of usernames at some point in the past.  If your username wasn't included, you'll have to email RC to get a directory created for you.</span>.  
+
+The scratch space is intended for temporary data, so is a great place to put input or output files from jobs, particularly if you intend to post-process your outputs to extract a smaller amount of data from them.
 
 You can read
 [more documentation on how RC storage works](https://docs.rc.fas.harvard.edu/kb/cluster-storage/).
 
-We have two compute partitions dedicated to our lab (the `-p`, for
-partition, will make sense when you learn how to launch compute jobs
-with the `slurm` scheduler):
-
-* **-p eddy:** 2680 cores, from three generations of cluster
-  acquisition:
-  
-  - 14x36 (504 cores), [holy2c02101-06,08-10,12-16]; circa 2016
-  - 16x40 (640 cores), [holy2c14201-16]; circa 2018
-  - 24x64 (1536 cores), [holy8a2*]; circa 2023
-
-  Our 2016 gen1 cores aren't all that much slower than the 2023 gen3
-  cores, so we just have everything lumped together. We'll keep
-  running the old cores until they die in harness. (2 of our 16 gen1
-  nodes already have.)
-  
-* **-p eddy_gpu:** 
-  We use this partition for GPU-enabled machine learning stuff,
-  TensorFlow and the like.  
-  We have 5 GPU nodes:
-  holyb0909,holyb0910,holygpu2c0923,holygpu2c1121,holygpu7c0920.  
-
-  Each holyb node has 4 [NVIDIA Tesla V100 NVLINK GPUs](https://www.nvidia.com/en-us/data-center/v100/)
-  with 32G VRAM, 2 16-core Xeon CPUs, and 192G RAM [installed 2018].  
+All of our lab's computing equipment is contained in the eddy partition, which contains 1,872 cores.  Most of our machines have 8GB of RAM per core.  In addition, we have three GPU-equipped machines, which are part of the partition: holygpu2c0923, holygpu2c1121, and holygpu7c0920<span class="marginnote">The "holy" at the beginning of our machine names refers to their location in the Holyoke data center.</span>
 
   Each holygpu2c node has 8 [NVIDIA Ampere A40 GPUs](https://www.nvidia.com/en-us/data-center/a40/)
-  with 48G VRAM, 2 24-core Xeon CPUs, and 768G RAM [installed 2022].  
+  with 48G VRAM [installed 2022].  
   
   The holygpu7 node has 4 [NVIDIA HGX A100 GPUs](https://www.nvidia.com/en-us/data-center/hgx/)
-  with 80G VRAM, 2 24-core AMD CPUs, and 1024G RAM [installed 2023].  
+  with 80G VRAM [installed 2023].  
   
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
 shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has

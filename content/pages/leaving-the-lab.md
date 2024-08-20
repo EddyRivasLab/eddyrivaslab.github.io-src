@@ -30,8 +30,8 @@ will make it easy for us to archive your data to tape so that it costs
 less to maintain but is still accessible if we need it.
 
 5. Return any lab "loaner" laptops to Nick.  Turn in lab-owned
-computing equipment to Ariane (or her 
-successor) to be re-installed. Turn in any notebooks to Ariane as well
+computing equipment, including any backup disks to Ariane or her 
+successor. Turn in any notebooks to Ariane as well
 so that they can be scanned to satisfy Harvard's research retention
 rules.
 
