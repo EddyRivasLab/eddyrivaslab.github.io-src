@@ -45,7 +45,7 @@ All of our lab's computing equipment is contained in the eddy partition, which c
   
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
 shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has
-[much more documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).
+[much more documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).  
 
 
 ## Accessing the cluster
