@@ -1,4 +1,7 @@
-# Using the Linaro Forge Debugger on our RC Machines
+Title: Using Linaro Forge on the RC Machines
+Date: 1/16/25
+Authors: Nick Carter
+slug: linaro-forge
 
 Linaro Forge is a debugger and performance-analysis tool that is mostly designed for multi-threaded and multi-machine (MPI) programs, but is also somewhat better than text-mode debuggers (in Nick's humble opinion) on sequential programs. I (Nick)
 have only used it for C programs, but I believe it can be used for Python applications.
