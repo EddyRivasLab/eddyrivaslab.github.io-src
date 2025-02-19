@@ -1,5 +1,5 @@
-Title: Eddy and Rivas Lab Cluster Resources and how to Access Them
-Date: 11/16/22
+Title: Eddy and Rivas Lab Cluster Resources and How to Access Them
+Date: 19 Feb 2025
 slug:cluster-computing-in-the-eddy-and-rivas-labs
 Authors: Sean Eddy
 
