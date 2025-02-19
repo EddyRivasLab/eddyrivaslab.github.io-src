@@ -35,18 +35,29 @@ The scratch space is intended for temporary data, so is a great place to put inp
 You can read
 [more documentation on how RC storage works](https://docs.rc.fas.harvard.edu/kb/cluster-storage/).
 
-All of our lab's computing equipment is contained in the eddy partition, which contains 1,872 cores.  Most of our machines have 8GB of RAM per core.  In addition, we have three GPU-equipped machines, which are part of the partition: holygpu2c0923, holygpu2c1121, and holygpu7c0920<span class="marginnote">The "holy" at the beginning of our machine names refers to their location in the Holyoke data center.</span>
+All of our lab's computing equipment is contained in the `eddy`
+partition, which currently comprises 33 CPU-only nodes and 6 GPU nodes
+(which also have CPUs), totalling 3264 CPU cores and 32 GPUs (12
+H100's, 4 A100's, and 16 old A40's).  Most of our machines have 8GB of
+RAM per CPU core. The machines are physically located in Harvard's
+Holyoke data center.
 
-  Each holygpu2c node has 8 [NVIDIA Ampere A40 GPUs](https://www.nvidia.com/en-us/data-center/a40/)
-  with 48G VRAM [installed 2022].  
-  
-  The holygpu7 node has 4 [NVIDIA HGX A100 GPUs](https://www.nvidia.com/en-us/data-center/hgx/)
-  with 80G VRAM [installed 2023].  
-  
 We can also use Harvard-wide shared partitions on the RC cluster. `-p
-shared` is 19,104 cores (in 399 nodes), for example (as of Jan 2023). RC has
-[much more documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).  
+shared` is 14,880 cores (in 310 nodes), for example (as of Feb 2025),
+and there are several other partitions we can use. For more
+information on these, see
+[RC's documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).  
 
+In more detail, our current cluster computing nodes are:
+
+| nodes | core/node | CPU_type                  | RAM   | RAM/core | GPU/node | GPU_type             | tot_core | tot_GPU | date     | source | holy* node names                                                                            |
+|-------|-----------|---------------------------|-------|----------|----------|----------------------|----------|---------|----------|--------|---------------------------------------------------------------------------------------------|
+| 5     | 48        | Xeon Platinum 8268 2.9GHz | 192G  | 4G       | -        | -                    | 240      | -       | Apr 2024 | FAS    | 7c104[11-12], 7c105[01-03]                                                                  |
+| 24    | 64        | Xeon Platinum 8358 2.6GHz | 512G  | 8G       | -        | -                    | 1536     | -       | Jan 2023 | HHMI   | 8a255[03-06] 8a256[03-06] 8a271[11,12] 8a272[07-12] 8a272[07-12] 8a273[07-12] 8a274[07,08]  |
+| 4     | 192       | AMD EPYC 9654 2.4GHz      | 1536G | 8G       | -        | -                    | 768      | -       | May 2024 | HHMI   | 8a[28509-28512]                                                                             |
+| 2     | 48        | Xeon Platinum 8268 2.9GHz | 768G  | 16G      | 8        | NVIDIA A40 48G       | 96       | 16      | Jan 2023 | HHMI   | gpu2c[0923,1121]                                                                            |
+| 1     | 48        | AMD EPYC 74F3 3.2GHz      | 1024G | 21G      | 4        | NVIDIA A100 HGX 80G  | 48       | 4       | Jan 2023 | HHMI   | gpu7c0920                                                                                   |
+| 3     | 192       | AMD EPYC 9654 2.4GHz      | 1536G | 8G       | 4        | NVIDIA H100 SXM5 80G | 576      | 12      | May 2024 | HHMI   | gpu8a[26504-26506]                                                                          |
 
 ## Accessing the cluster
 
@@ -410,31 +421,22 @@ The `sacct` command shows SLURM log info about jobs you ran in the past.
 
 ### etiquette
 
-We have two partitions, `-p eddy` with 640 cores and 4.8GB RAM/core
-and `-p eddy_hmmer` with 576 slower cores and 3.7GB/core.  We often
-use `-p eddy` for daily work (where we want stuff to be
-near-interactive, finishing in minutes not hours). If you submit 600+
-long-running jobs to `-p eddy`, nobody else can use it for a while.
-To avoid getting in each others' way on `-p eddy`, at any one time,
+To avoid getting in each others' way on our `-p eddy` partition, at any one time,
 please limit your resource use to:
 
-  * <50% of the cores (320)
-  * <50% of the RAM per node (96G) OR <4.8GB/core
+  * <50% of our cores
+  * <50% of the RAM per node OR <4GB/core
   * <30min per job
 
-Larger workloads can be sent to the `-p eddy_hmmer` queue, our night
-train, without any etiquette on job number, memory piggishness, or
-time.
-
-The <320 core, <96G/node|<4.8G/core memory, <30min guidelines are just
-guidelines.  The principle is what's important.  Nobody should have to
-wait >30min to get their job to start running on `-p eddy`. If you
-cause such pain, there may be public shaming and/or donut penalty.
-Launching one job that takes a day to complete, or a thousand
-10-second jobs is not going to get in anyone's way either. Conversely,
-it's possible that three or more people in the lab could try to occupy
-50% of our resources at a time and jam us up, so use `sinfo -p eddy`
-to see how busy things are and be reasonable.
+These guidelines are just guidelines.  The principle is what's
+important.  Nobody should have to wait >30min to get their job to
+start running on `-p eddy`. If you cause such pain, there may be
+public shaming and/or donut penalty.  Launching one job that takes a
+day to complete, or a thousand 10-second jobs is not going to get in
+anyone's way either. Conversely, it's possible that two or more people
+in the lab could try to occupy 50% of our resources at a time and jam
+us up, so use `sinfo -p eddy` to see how busy things are and be
+reasonable.
 
 You can also add `--nice 1000` to your `sbatch` command, to downgrade
 your running priority in the queue, which helps let other people's
