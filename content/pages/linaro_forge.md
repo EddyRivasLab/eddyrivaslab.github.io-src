@@ -22,5 +22,5 @@ Then, start the Linaro Forge front-end.  You'll get a window that has five optio
 
 Once you've done this, click the "test remote launch" button.  That will bring up another window.  Click the "show terminal" button and enter your RC password and two-factor authentication code.  The tool should then continue and give you a message that the test succeeded.  If it fails, check all the items in the Remote Launch Settings window, and pester Nick C. if you still have problems.
 
-Now, you're ready to actually run the debugger.  Select the remote launch configuration you just created from the Remote Launch menu, and it should connect through and start Forge on the RC node.  Then, click "Run" to start the debugger, fill out the fields on the window that comes up appropriately, and you're ready to start debugging.
+Now, you're ready to actually run the tool.  Select the remote launch configuration you just created from the Remote Launch menu, and it should connect through and start Forge on the RC node.  Then, click "Run" to start the debugger, fill out the fields on the window that comes up appropriately, and you're ready to start debugging.
 
