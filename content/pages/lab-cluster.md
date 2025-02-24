@@ -11,7 +11,7 @@ Our high performance cluster computing is managed by
 
 Your RC _home directory_ is something like `/n/home01/<username>`.
 When you log in, that's where you'll land. You have 100GB of space
-here. 
+there. 
 
 Our _lab storage_ is `/n/eddy_lab/`. We have 400TB of what RC calls
 Tier 1 storage, which is fast but expensive. 
