@@ -27,3 +27,4 @@ Being overloaded reduces the rate at which a computer completes work, because it
 To find out who is overloading a particular machine, you can run 'squeue -w _machinename_', which will list the jobs running on the machine, the partition that those jobs were sent to, and the user who started the job.  If the job(s) is/are from one of our partitions, ask the person responsible to address the problem.  If they're from one of the requeue partitions, send mail to RC and they'll fix it.
 
 
+[test link](<script id="dataverse-widget-js" src="https://dataverse.harvard.edu/resources/js/widgets.js?alias=eddylab&amp;dvUrl=https://dataverse.harvard.edu&amp;widgetScope=eddylab&amp;widget=iframe&amp;heightPx=500"></script>)
