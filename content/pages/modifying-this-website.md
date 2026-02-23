@@ -46,5 +46,5 @@ Our Pelican setup can parse and render LaTeX math syntax.  Wrapping a LaTeX math
 ###Adding pictures/images
 Pictures and images should be placed in the content/images directory.  Don't forget to "git add" your image files.  I haven't figured out how to get image linking to work in Pelican yet, please let me (Nick) know if you figure it out.
 
-
+[Nick's test link, please ignore](<script id="dataverse-widget-js" src="https://dataverse.harvard.edu/resources/js/widgets.js?alias=eddylab&amp;dvUrl=https://dataverse.harvard.edu&amp;widgetScope=eddylab&amp;widget=iframe&amp;heightPx=500"></script>)
 
