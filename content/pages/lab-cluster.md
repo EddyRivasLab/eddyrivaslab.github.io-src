@@ -1,17 +1,70 @@
 Title: Eddy and Rivas Lab Cluster Resources and How to Access Them
-Date: 19 Feb 2025
+Date:  Thu 04 Jun 2026
 slug:cluster-computing-in-the-eddy-and-rivas-labs
 Authors: Sean Eddy
 
 Our high performance cluster computing is managed by
 [Harvard Research Computing](https://www.rc.fas.harvard.edu/) (RC).
 
+## First time with us
 
-## Overview 
+Do a [new account
+request](https://portal.rc.fas.harvard.edu/request/account/new) at
+Research Computing. It will email me, and I will confirm your account creation.
 
-Your RC _home directory_ is something like `/n/home01/<username>`.
-When you log in, that's where you'll land. You have 100GB of space
-there. 
+Set up [two-factor
+authentication](https://docs.rc.fas.harvard.edu/kb/openauth/). I use
+the Okta Verify app, the same 2FA app used by Harvard Key. You should
+also download and install the little Java widget they provide; this
+lets you get your OpenAuth 2FA code from your laptop, without your
+phone.
+
+You should be able to ssh into the cluster now. With your username in
+place of mine (`seddy`), do:
+
+```
+    % ssh seddy@login.rc.fas.harvard.edu
+```
+
+It'll ask for your RC password and an OpenAuth two-factor
+authentication key.
+
+For more detailed information, see:
+
+* How to get a [Research Computing (RC) account](https://rc.fas.harvard.edu/resources/faq/how-do-i-get-a-research-computing-account/).
+* How to [access the RC cluster](https://docs.rc.fas.harvard.edu/kb/access-and-login/)
+* How to install [OpenAuth two-factor authentication](https://docs.rc.fas.harvard.edu/kb/openauth/)
+* Behold the glory of the rest of
+  [RC's extensive documentation](https://docs.rc.fas.harvard.edu/),
+  where most questions you have about RC are answered.
+
+Eventually you will want to set up some other things to make life
+easier:
+
+* passwordless ssh access, so you don't have to type password and
+  OpenAuth key all the time
+* a brief alias (like `ody`), so you don't have to type out
+  `seddy@login.rc.fas.harvard.edu`
+* an alias for launching the OpenAuth code widget on your laptop
+* VPN access, for when you're not inside the Harvard network  
+
+These additional steps are described further below. Once you have all
+this set up, you'll be able to just do `ssh ody` to log in to an RC
+node.
+  
+________________________________________________________________
+
+## Overview of the labs' computing resources
+
+When you first log in, you're on a **login node**, named something
+like `holylogin08`. Do `hostname` to see this.  Don't do intensive
+computation directly on a login node.  Instead, in your normal work,
+you'll submit jobs to the cluster using SLURM, or you'll use SLURM to
+request a login to one of our **compute nodes**.
+
+Your RC _home directory_ is something like `/n/home01/<username>`.  Do
+`pwd` to see this. When you log in, that's where you'll land. You
+have 100GB of space there.
 
 Our _lab storage_ is `/n/eddy_lab/`. We have 400TB of what RC calls
 Tier 1 storage, which is fast but expensive. 
@@ -20,32 +73,15 @@ Both your home directory and our lab storage are backed up nightly to
 what RC calls _snapshots_, and periodically to what RC calls _disaster
 recovery_ (DR) backups.
 
-It's convenient to be able to browse and edit your files on the
-cluster directly from your laptop or desktop without logging into the
-cluster. If you get on the RC VPN, you can remote mount your home
-directory and/or the `/n/eddy_lab` lab filesystem on your local
-machine using `samba`. (Warning: a samba mount is slow, and may
-sometimes be flaky; don't rely on it except for lightweight tasks.)
-Instructions are below.
+All of our lab's computing hardware is in the `eddy` partition, which
+currently comprises 33 CPU-only nodes and 6 GPU nodes (which also have
+CPUs), totalling 3264 CPU cores and 32 GPUs (12 H100's, 4 A100's, and
+16 old A40's).  Most of our machines have 8GB of RAM per CPU core. The
+machines are physically located in Harvard's Holyoke data center.
 
-RC also provides _shared scratch storage_, which is very fast but not backed up.  Files on the scratch storage that are older than 90 days are automatically deleted, and RC strongly frowns on playing tricks to make files look younger than they are.  Because RC occasionally moves the scratch storage to different devices, the easiest way to access it is through the &dollar;SCRATCH variable, which is defined on all RC machines.  Our lab has an eddy_lab directory on the scratch space with a 50TB quota, which contains a Users directory, so '&dollarSCRATCH/eddy_lab/Users/yourusername' will point to your directory on the scratch space <span class="marginnote">The Users directory was pre-populated with space for a set of usernames at some point in the past.  If your username wasn't included, you'll have to email RC to get a directory created for you.</span>.  
-
-The scratch space is intended for temporary data, so is a great place to put input or output files from jobs, particularly if you intend to post-process your outputs to extract a smaller amount of data from them.
-
-You can read
-[more documentation on how RC storage works](https://docs.rc.fas.harvard.edu/kb/cluster-storage/).
-
-All of our lab's computing equipment is contained in the `eddy`
-partition, which currently comprises 33 CPU-only nodes and 6 GPU nodes
-(which also have CPUs), totalling 3264 CPU cores and 32 GPUs (12
-H100's, 4 A100's, and 16 old A40's).  Most of our machines have 8GB of
-RAM per CPU core. The machines are physically located in Harvard's
-Holyoke data center.
-
-We can also use Harvard-wide shared partitions on the RC cluster. `-p
-shared` is 14,880 cores (in 310 nodes), for example (as of Feb 2025),
-and there are several other partitions we can use. For more
-information on these, see
+We can also use Harvard-wide shared partitions on the RC cluster
+including `-p shared` and `-p sapphire` (14,880 and 20,832 cores, as
+of 06/2026), among others.  For more information on these, see
 [RC's documentation on available partitions](https://docs.rc.fas.harvard.edu/kb/running-jobs/#Slurm_partitions).  
 
 In more detail, our current cluster computing nodes are:
@@ -59,34 +95,86 @@ In more detail, our current cluster computing nodes are:
 | 1     | 48        | AMD EPYC 74F3 3.2GHz      | 1024G | 21G      | 4        | NVIDIA A100 HGX 80G  | 48       | 4       | Jan 2023 | HHMI   | gpu7c0920                                                                                   |
 | 3     | 192       | AMD EPYC 9654 2.4GHz      | 1536G | 8G       | 4        | NVIDIA H100 SXM5 80G | 576      | 12      | May 2024 | HHMI   | gpu8a[26504-26506]                                                                          |
 
-## Accessing the cluster
 
-### logging on, first time
 
-* Get a [Research Computing (RC) account](https://rc.fas.harvard.edu/resources/faq/how-do-i-get-a-research-computing-account/).
-* Read about how to [access the RC cluster](https://docs.rc.fas.harvard.edu/kb/access-and-login/)
-* Install [OpenAuth two-factor authentication](https://docs.rc.fas.harvard.edu/kb/openauth/)
 
-* Behold the glory of
-  [RC's extensive documentation](https://docs.rc.fas.harvard.edu/),
-  where most questions you have about RC are answered.
+  
 
-* If you chose to install their little Java OpenAuth application on your
-  machine to generate your OpenAuth codes (instead of using Duo Mobile
-  or Google Authenticator on your smart phone), it's convenient to
-  make an alias for launching it. In my `.bashrc`, I have `alias
-  ody-auth='~/sw/seddy-openauth/seddy-openauth.sh &'`, so I can launch
-  my authenticator on the commandline with `ody-auth`.
 
-You should be able to ssh into the cluster now. With your username in
-place of mine (`seddy`), do:
+It's convenient to be able to browse and edit your files on the
+cluster directly from your laptop or desktop without logging into the
+cluster. If you get on the RC VPN, you can remote mount your home
+directory and/or the `/n/eddy_lab` lab filesystem on your local
+machine using `samba`. (Warning: a samba mount is slow, and may
+sometimes be flaky; don't rely on it except for lightweight tasks.)
+Instructions are below.
 
-```
-    % ssh seddy@login.rc.fas.harvard.edu
-```
+RC also provides _shared scratch storage_, which is very fast but not
+backed up.  Files on the scratch storage that are older than 90 days
+are automatically deleted, and RC strongly frowns on playing tricks to
+make files look younger than they are.  Because RC occasionally moves
+the scratch storage to different devices, the easiest way to access it
+is through the &dollar;SCRATCH variable, which is defined on all RC
+machines.  Our lab has an eddy_lab directory on the scratch space with
+a 50TB quota, which contains a Users directory, so
+'&dollarSCRATCH/eddy_lab/Users/yourusername' will point to your
+directory on the scratch space <span class="marginnote">The Users
+directory was pre-populated with space for a set of usernames at some
+point in the past.  If your username wasn't included, you'll have to
+email RC to get a directory created for you.</span>.   
 
-It'll ask for your RC password and an OpenAuth two-factor
-authentication key.
+The scratch space is intended for temporary data, so is a great place
+to put input or output files from jobs, particularly if you intend to
+post-process your outputs to extract a smaller amount of data from
+them.
+
+
+
+
+________________________________________________________________
+
+
+## Configuring easier access to the cluster
+
+### set up ssh access (passwordless)
+
+It's convenient to not have to type your password every time you try
+to log in to a remote machine, or run a remote command on it, or copy
+files to/from it (with `ssh` and `scp`). To enable this, set up ssh
+public-key authentication.
+
+You create a public/private key pair with `ssh-keygen`, which will use
+the Ed25519 cryptography algorithm and store the two files in `.ssh/`
+by default: `~/.ssh/id_ed25519.pub` and `~/.ssh/id_ed25519`.
+
+The public key is a single line: `<algorithm> <public_key> <comment>`.
+You will add your public key line into your `.ssh/authorized_keys`
+file on a remote SSH server you want to connect to. You can use the
+same public key on multiple remote servers. You can do this either
+with the `ssh-copy-id <user>@<remotehost>` command (which will log you
+into the remote host by standard password authentication and copy your
+public key(s) to the remote `.ssh/authorized_keys` file), or you can
+manually edit your remote `.ssh/authorized_keys` file to add a public
+key line to it.
+
+Your private key must be kept private. As an extra layer of security,
+when you create it a public/private key pair, `ssh-keygen` will ask
+you for an optional passphrase, and if you provide one, it will
+encrypt the private key with that passphrase.  I don't use a
+passphrase. This makes it easier for me to use passwordless ssh
+authentication, but at some risk; if anyone were to obtain my private
+key, they would be able to use it to log in to remote servers with my
+identity.
+
+In summary, here's what you do, on your local machine (i.e. your laptop):
+
+    ssh-keygen
+    ssh-copy-id <username>@login.rc.fas.harvard.edu
+    
+For more information:
+
+   * `man ssh-keygen`
+   * ["Passwordless SSH" RC documentation](https://docs.rc.fas.harvard.edu/kb/terminal-access/)
 
 
 
@@ -113,16 +201,37 @@ Now you can access RC just by:
     % ssh ody
 ```
 
-You still have to authenticate by password and OpenAuth code, though.
+### set up an alias to the OpenAuth widget
 
-	
+You can get your 2FA OpenAuth code from the app on your phone (Okta or
+whatever), or you can also get it from a little widget that runs on
+your laptop. The installation package and instructions were at 
+[https://two-factor.rc.fas.harvard.edu/](https://two-factor.rc.fas.harvard.edu/).
+
+It's convenient to make an alias for launching it. In my `.bashrc`, I
+have alias ody-auth='~/sw/seddy-openauth/seddy-openauth.sh &', so I
+can launch my authenticator on the commandline by typing `ody-auth`.
+
+
+### set up VPN access
+
+You don't need to be on the RC VPN to log in to the cluster, but you do
+need to be on the VPN if you want to mount any of our RC storage on
+your local machine.
+
+* How to set up [VPN access to Odyssey](https://rc.fas.harvard.edu/resources/vpn-setup/).
+
+
+
 ### configuring single sign-on scp access
 
-Even better, but a little more complicated: you can make it so you
-only have to authenticate once, and every ssh or scp after that is
-passwordless. To do this, I use
-[SSH ControlMaster for single sign-on](https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/),
-to open a single `ssh` connection that you authenticate once, and all
+The Cannon cluster now allows ssh passwordless authentication
+(described above), but it didn't used to. For posterity's sake, here's
+the slightly more complicated way to enable passwordless
+authentication via "single sign-on" with ssh.  Using [SSH
+ControlMaster for single
+sign-on](https://docs.rc.fas.harvard.edu/kb/using-ssh-controlmaster-for-single-sign-on/),
+you can open a single `ssh` connection that you authenticate once, and all
 subsequent `ssh`-based traffic to RC goes via that connection.
 
 RC's
@@ -168,69 +277,16 @@ time out by itself.
 
 
 
-________________________________________________________________
 
-## Accessing our storage
-
-
-### set up VPN access
-
-You don't need to be on the RC VPN to log in to the cluster, but you do
-need to be on the VPN if you want to mount any of our RC storage on
-your local machine.
-
-* Set up [VPN access to Odyssey](https://rc.fas.harvard.edu/resources/vpn-setup/).
-
-
-### mounting our lab filesystem on your machine
-
-You need to be on the RC VPN to remote mount our filesystem.
-
-From the Mac OS/X Finder, choose Go->Connect To Server, and give it:
-```bash
-   smb://eddyfs.rc.fas.harvard.edu/eddy_lab
-```
-
-It will mount at `/Volumes/eddy_lab` on your local machine, and it
-will show up in Locations in the Finder. 
-
-If your username on your local machine is different from your username
-on the cluster, make that URL `smb://<username>:eddyfs.rc.fas.harvard.edu/eddy_lab`.
-
-To use the OS/X command line instead of the Finder GUI:
-```bash
-   # to mount:
-   % osascript -e 'mount volume "smb://eddyfs.rc.fas.harvard.edu/eddy_lab`
-   # to unmount:
-   $ umount /Volumes/eddy_lab
-```
-
-You can also samba-mount your cluster home directory [[RC
-documentation is
-here](https://docs.rc.fas.harvard.edu/kb/mounting-storage/)]. Figure
-out where your home dir is (`cd; pwd`). It's something like
-`/n/homeXX/<username>`; mine is `/n/home14/seddy`. The URL to samba
-mount my home dir is
-`smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy`. Replace those
-last two bits with your own `homeXX/<username>`.
-
-I have these aliased in my `.bashrc`:
-
-```
-    alias ody-mount="osascript -e 'mount volume \"smb://eddyfs.rc.fas.harvard.edu/eddy_lab\"'"
-    alias ody-home-mount="osascript -e 'mount volume \"smb://rcstore.rc.fas.harvard.edu/homes/home14/seddy\"'"
-    alias ody-umount='umount /Volumes/eddy_lab'
-    alias ody-home-umount='umount /Volumes/seddy'
-```
-
-All reputable people say it's important to remember to unmount the
-filesystem before you do something that breaks the network connection
-(like logging out of the VPN). On the other hand, I routinely forget,
-and nothing has imploded yet.
 
 ________________________________________________________________
 
-## Accessing our shared data (genomes, seq db's)
+## More about our storage
+
+You can read
+[more documentation on how RC storage works](https://docs.rc.fas.harvard.edu/kb/cluster-storage/).
+
+### our shared data (genomes, seq db's)
 
 Many standard sequence databases are installed in
 `/n/eddy_lab/data/` including
@@ -238,6 +294,29 @@ Pfam, Rfam, and UniProt.
 
 Many genome and transcriptome datasets are installed in
 `/n/eddy_lab/genomes/`.
+
+### scratch storage
+
+RC also provides _shared scratch storage_, which is very fast but not
+backed up.  Files on the scratch storage that are older than 90 days
+are automatically deleted, and RC strongly frowns on playing tricks to
+make files look younger than they are.  Because RC occasionally moves
+the scratch storage to different devices, the easiest way to access it
+is through the &dollar;SCRATCH variable, which is defined on all RC
+machines.  Our lab has an eddy_lab directory on the scratch space with
+a 50TB quota, which contains a Users directory, so
+'&dollarSCRATCH/eddy_lab/Users/yourusername' will point to your
+directory on the scratch space <span class="marginnote">The Users
+directory was pre-populated with space for a set of usernames at some
+point in the past.  If your username wasn't included, you'll have to
+email RC to get a directory created for you.</span>.   
+
+The scratch space is intended for temporary data, so is a great place
+to put input or output files from jobs, particularly if you intend to
+post-process your outputs to extract a smaller amount of data from
+them.
+
+
 
 ________________________________________________________________
 
