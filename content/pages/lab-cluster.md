@@ -43,8 +43,7 @@ easier:
 
 * passwordless ssh access, so you don't have to type password and
   OpenAuth key all the time
-* a brief alias (like `ody`), so you don't have to type out
-  `seddy@login.rc.fas.harvard.edu`
+* a brief alias (like `ody`), so you don't have to type out `seddy@login.rc.fas.harvard.edu`
 * an alias for launching the OpenAuth code widget on your laptop
 * VPN access, for when you're not inside the Harvard network  
 
@@ -99,36 +98,6 @@ In more detail, our current cluster computing nodes are:
 
 
   
-
-
-It's convenient to be able to browse and edit your files on the
-cluster directly from your laptop or desktop without logging into the
-cluster. If you get on the RC VPN, you can remote mount your home
-directory and/or the `/n/eddy_lab` lab filesystem on your local
-machine using `samba`. (Warning: a samba mount is slow, and may
-sometimes be flaky; don't rely on it except for lightweight tasks.)
-Instructions are below.
-
-RC also provides _shared scratch storage_, which is very fast but not
-backed up.  Files on the scratch storage that are older than 90 days
-are automatically deleted, and RC strongly frowns on playing tricks to
-make files look younger than they are.  Because RC occasionally moves
-the scratch storage to different devices, the easiest way to access it
-is through the &dollar;SCRATCH variable, which is defined on all RC
-machines.  Our lab has an eddy_lab directory on the scratch space with
-a 50TB quota, which contains a Users directory, so
-'&dollarSCRATCH/eddy_lab/Users/yourusername' will point to your
-directory on the scratch space <span class="marginnote">The Users
-directory was pre-populated with space for a set of usernames at some
-point in the past.  If your username wasn't included, you'll have to
-email RC to get a directory created for you.</span>.   
-
-The scratch space is intended for temporary data, so is a great place
-to put input or output files from jobs, particularly if you intend to
-post-process your outputs to extract a smaller amount of data from
-them.
-
-
 
 
 ________________________________________________________________
@@ -305,7 +274,7 @@ the scratch storage to different devices, the easiest way to access it
 is through the &dollar;SCRATCH variable, which is defined on all RC
 machines.  Our lab has an eddy_lab directory on the scratch space with
 a 50TB quota, which contains a Users directory, so
-'&dollarSCRATCH/eddy_lab/Users/yourusername' will point to your
+'&dollar;SCRATCH/eddy_lab/Users/yourusername' will point to your
 directory on the scratch space <span class="marginnote">The Users
 directory was pre-populated with space for a set of usernames at some
 point in the past.  If your username wasn't included, you'll have to
