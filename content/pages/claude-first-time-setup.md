@@ -17,16 +17,16 @@ You won't be able to run it yet. You need an API key. That's next.
 
 ## 2. Apply to HUIT for your "app" API key.
 
-* Go to:
+Go to:
 [portal.apis.huit.harvard.edu/register-an-app](https://portal.apis.huit.harvard.edu/register-an-app).
 
-* Sign in to Harvard Key at the upper right.
+Sign in to Harvard Key at the upper right.
 
-* Your username in the upper right is a drop-down menu; select `Apps`.
+Your username in the upper right is a drop-down menu; select `Apps`.
 
-* Press the `+ NEW APP` button in the upper right.
+Press the `+ NEW APP` button in the upper right.
   
-* Provide the following information to the form:
+Provide the following information to the form:
 
   - App name:  `<LastName>_FAS`  
     Example for me: `Eddy_FAS`
@@ -40,25 +40,25 @@ You won't be able to run it yet. You need an API key. That's next.
   - APIs: select `AI Services - AWS Bedrock API` by pressing the
     Request button.
     
-  When done, click the `SAVE` button in the lower right. 
+When done, click the `SAVE` button in the lower right. 
   
-  Approval is automatic, if HUIT's script sees our valid HUIT customer
-  number.
+Approval is automatic, if HUIT's script sees our valid HUIT customer
+number.
   
-  This sets up monthly billing to the lab's startup fund. Our startup
-  fund is a nigh-nonrenewable resource right now. Use it wisely. The
-  HUIT script is supposed to see the $400 monthly limit and honor it,
-  but I'm not yet sure that it does. I have been tracking my Claude
-  session usage to make sure I'm not burning through money too
-  outrageously.
+This sets up monthly billing to the lab's startup fund. Our startup
+fund is a nigh-nonrenewable resource right now. Use it wisely. The
+HUIT script is supposed to see the $400 monthly limit and honor it,
+but I'm not yet sure that it does. I have been tracking my Claude
+session usage to make sure I'm not burning through money too
+outrageously.
   
-* Once you're approved, you will have access to a HUIT web page titled
-  `<LastName>_FAS` for your Claude billing account. This page shows
-  you your API key, unique to you. This is what you need to provide to
-  Claude to enable access.
+ Once you're approved, you will have access to a HUIT web page titled
+`<LastName>_FAS` for your Claude billing account. This page shows you
+your API key, unique to you. This is what you need to provide to
+Claude to enable access.
   
-  **TREAT THE API KEY LIKE A PASSWORD. NEVER EXPOSE IT TO ANYONE. NEVER
-  EXPOSE IT IN A GIT-MANAGED FILE.**
+**TREAT THE API KEY LIKE A PASSWORD. NEVER EXPOSE IT TO ANYONE. NEVER
+EXPOSE IT IN A GIT-MANAGED FILE.**
   
   
 ## 3. Configure your environment.  
@@ -104,19 +104,19 @@ found it more tedious than using `.claude/settings.json`.
 
 ## 4. First time with Claude Code
 
-* `cd` to the directory you want to work in.
+`cd` to the directory you want to work in.
 
-* Run it at the command line: `claude`
+Run it at the command line: `claude`
 
-* Put it in a sandbox, so it only accesses files under the current
-  directory (plus its own startup files in `.claude/`, I suppose) and
-  doesn't go rummaging around elsewhere: `/sandbox`. Select
-  `auto-allow mode`.
+Put it in a sandbox, so it only accesses files under the current
+directory (plus its own startup files in `.claude/`, I suppose) and
+doesn't go rummaging around elsewhere: `/sandbox`. Select `auto-allow
+mode`.
 
-* Select your model: `/model`. Select from the menu. I use Opus
-  4.8. Fable will generally refuse to work on comp bio code.
+Select your model: `/model`. Select from the menu. I use Opus
+4.8. Fable will generally refuse to work on comp bio code.
   
-* Off you go - ask it to work on something!
+Off you go - ask it to work on something!
 
 
 ## More information
@@ -125,9 +125,9 @@ These notes are an abbreviated version of notes from a "Generative AI
 for Scholarship" nanocourse that Chris Stubbs gave. His course is
 online and gives more detail than I have:
 
-* [Setting up Anthropic API access](https://astrostubbs.github.io/GenAI-for-Scholarship/setting-up-claude-code.html)
+[Setting up Anthropic API access](https://astrostubbs.github.io/GenAI-for-Scholarship/setting-up-claude-code.html)
 
-* [The Claude Code CLI](https://astrostubbs.github.io/GenAI-for-Scholarship/session3-power-user.html)
+[The Claude Code CLI](https://astrostubbs.github.io/GenAI-for-Scholarship/session3-power-user.html)
   
 Anthropic also provides [notes on getting started](https://code.claude.com/docs/en/overview).
 
